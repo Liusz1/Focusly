@@ -1,0 +1,191 @@
+/* --- VARIABLE & RESET --- */
+:root {
+  --bg-main: #f0f2f5;
+  --glass-bg: rgba(255, 255, 255, 0.8);
+  --glass-border: rgba(255, 255, 255, 0.4);
+  --text-dark: #1e293b;
+  --text-muted: #64748b;
+  --accent-indigo: #6366f1;
+  --accent-purple: #a855f7;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  background-color: var(--bg-main);
+  color: var(--text-dark);
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* --- DEKORASI BACKGROUND (TETAP DI BELAKANG) --- */
+.bg-blur-circle-1 {
+  position: fixed;
+  top: -50px;
+  right: -50px;
+  width: 200px;
+  height: 200px;
+  background: #c7d2fe;
+  filter: blur(80px);
+  z-index: -1;
+}
+
+.bg-blur-circle-2 {
+  position: fixed;
+  bottom: 10%;
+  left: -50px;
+  width: 150px;
+  height: 150px;
+  background: #fbcfe8;
+  filter: blur(60px);
+  z-index: -1;
+}
+
+/* --- STICKY HEADER (PANAH TIDAK HILANG) --- */
+.header-nav {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: var(--glass-bg);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border-bottom: 1px solid var(--glass-border);
+  padding: 15px 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* Kotak Putih untuk Tombol Back */
+.back-btn {
+  width: 42px;
+  height: 42px;
+  background: white;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: var(--accent-indigo);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: 0.2s;
+}
+
+.back-btn:active {
+  transform: scale(0.9);
+}
+
+.header-nav h2 {
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+/* --- WRAPPER UTAMA --- */
+.wrapper {
+  padding: 20px;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+/* --- DASHBOARD COMPONENTS (INDEX.HTML) --- */
+.clock-section {
+  text-align: center;
+  padding: 40px 0;
+}
+
+#digital-clock {
+  font-size: 4.8rem;
+  font-weight: 800;
+  color: var(--text-dark);
+  letter-spacing: -3px;
+  line-height: 1;
+}
+
+#current-date {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  margin-top: 10px;
+}
+
+.quote-card {
+  background: white;
+  padding: 25px;
+  border-radius: 24px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.02);
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.quote-text {
+  font-size: 1rem;
+  line-height: 1.6;
+  font-style: italic;
+  margin-bottom: 8px;
+}
+
+.quote-author {
+  font-size: 0.8rem;
+  color: var(--accent-indigo);
+  font-weight: 700;
+}
+
+/* --- GRID MENU --- */
+.menu-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  padding: 20px 15px;
+  border-radius: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  text-decoration: none;
+  color: var(--text-dark);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+}
+
+.glass-card i {
+  font-size: 1.8rem;
+  background: linear-gradient(
+    135deg,
+    var(--accent-indigo),
+    var(--accent-purple)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.glass-card span {
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.glass-card:active {
+  transform: scale(0.95);
+}
+
+/* --- RESPONSIVE LAYOUT --- */
+@media (min-width: 768px) {
+  .wrapper {
+    max-width: 600px;
+  }
+}

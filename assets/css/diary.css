@@ -1,0 +1,221 @@
+/* DIARY MODULE - FULL RESPONSIVE FIX */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body.diary-page {
+  background: #f8fafc;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  color: #334155;
+  padding-bottom: 100px;
+}
+
+/* HEADER STICKY - Biar navigasi gak hilang saat di-scroll */
+.header-nav {
+  position: sticky; /* Ini kuncinya bro */
+  top: 0; /* Nempel di paling atas layar */
+  left: 0;
+  width: 100%;
+  z-index: 1000; /* Biar gak ketumpuk sama konten diary/todo */
+  background: rgba(248, 250, 252, 0.8); /* Warna background semi transparan */
+  backdrop-filter: blur(10px); /* Efek blur kaca yang aesthetic */
+  padding: 15px 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.5); /* Garis halus di bawah header */
+}
+
+/* Pastikan wrapper tidak nabrak header karena sticky */
+.wrapper {
+  padding-top: 0 !important; /* Reset padding default */
+}
+
+/* Supaya konten list ada jarak dan gak kepotong header */
+.task-container,
+.diary-container,
+.input-section,
+.filter-bar {
+  margin-top: 10px;
+}
+
+.back-btn {
+  width: 40px;
+  height: 40px;
+  background: white;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: #333;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* Floating Button */
+#fab-add {
+  position: fixed;
+  bottom: 30px;
+  right: 25px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #6366f1, #a855f7);
+  color: white;
+  border: none;
+  font-size: 1.5rem;
+  box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4);
+  z-index: 99;
+  cursor: pointer;
+}
+
+/* Modal System */
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+}
+
+.modal-content {
+  background: white;
+  width: 100%;
+  max-width: 400px;
+  border-radius: 28px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-height: 85vh;
+  overflow-y: auto;
+}
+
+/* Mood Selector Fix */
+.mood-options {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 5px 0;
+}
+
+.mood-btn {
+  flex: 1;
+  min-width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  background: #f1f5f9;
+  border-radius: 12px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: 0.2s;
+}
+
+.mood-btn.selected {
+  background: #eef2ff;
+  border-color: #6366f1;
+  transform: scale(1.1);
+}
+
+/* Input Text */
+#diary-input {
+  width: 100%;
+  min-height: 150px;
+  padding: 15px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 18px;
+  font-family: inherit;
+  font-size: 1rem;
+  outline: none;
+  resize: none;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.save-btn {
+  flex: 2;
+  padding: 15px;
+  background: #6366f1;
+  color: white;
+  border: none;
+  border-radius: 15px;
+  font-weight: 700;
+}
+
+.cancel-btn {
+  flex: 1;
+  padding: 15px;
+  background: #f1f5f9;
+  border: none;
+  border-radius: 15px;
+  color: #64748b;
+}
+
+/* Diary Card List */
+.diary-item {
+  background: white;
+  padding: 20px;
+  border-radius: 24px;
+  margin-bottom: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+  border: 1px solid rgba(226, 232, 240, 0.5);
+}
+
+.diary-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.diary-date {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.diary-text {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #334155;
+  margin-bottom: 15px;
+}
+
+.diary-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.btn-edit,
+.btn-delete {
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: none;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-edit {
+  background: #eef2ff;
+  color: #6366f1;
+}
+.btn-delete {
+  background: #fff1f2;
+  color: #f43f5e;
+}

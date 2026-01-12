@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Personal OS | Dompet</title>
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      /* UI DASAR */
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(15, 23, 42, 0.7);
+        z-index: 9999;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(8px);
+        padding: 20px;
+        box-sizing: border-box;
+      }
+      .modal-content {
+        width: 100%;
+        max-width: 360px;
+        background: white;
+        padding: 25px;
+        border-radius: 30px;
+        animation: slideUp 0.3s ease-out;
+      }
+      @keyframes slideUp {
+        from {
+          transform: translateY(20px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      .balance-card {
+        background: linear-gradient(135deg, #6366f1, #a855f7);
+        color: white;
+        padding: 40px 20px;
+        border-radius: 32px;
+        text-align: center;
+        margin-bottom: 25px;
+        box-shadow: 0 20px 40px rgba(99, 102, 241, 0.2);
+      }
+      .transaction-card {
+        background: white;
+        padding: 16px;
+        border-radius: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+        cursor: pointer;
+        transition: all 0.2s;
+        border: 1px solid transparent;
+      }
+      .transaction-card:active {
+        transform: scale(0.98);
+        background: #f8fafc;
+      }
+      .transaction-card:hover {
+        border-color: #f1f5f9;
+      }
+
+      .chart-section {
+        background: white;
+        padding: 20px;
+        border-radius: 32px;
+        margin-top: 25px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+      }
+
+      /* STYLE STRUK */
+      #receipt-area {
+        background: white;
+        padding: 25px;
+        color: #000;
+        font-family: "Courier New", Courier, monospace;
+        width: 280px;
+        margin: 0 auto;
+      }
+      .receipt-line {
+        border-top: 1px dashed #000;
+        margin: 10px 0;
+      }
+    </style>
+  </head>
+  <body class="money-page">
+    <header
+      class="header-nav"
+      style="padding: 20px; display: flex; align-items: center"
+    >
+      <a href="../index.html" class="back-btn"
+        ><i class="fas fa-arrow-left"></i
+      ></a>
+      <h2 style="font-weight: 800; margin-left: 15px">Dompet OS</h2>
+    </header>
+
+    <div
+      class="wrapper"
+      style="padding-bottom: 50px; padding-left: 20px; padding-right: 20px"
+    >
+      <div class="balance-card">
+        <span style="opacity: 0.8; font-size: 0.9rem">Total Saldo</span>
+        <div id="total-balance" style="font-size: 2.8rem; font-weight: 800">
+          Rp 0
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 12px; margin-bottom: 25px">
+        <div
+          style="
+            background: white;
+            padding: 15px;
+            border-radius: 20px;
+            flex: 1;
+            text-align: center;
+          "
+        >
+          <span style="font-size: 0.6rem; color: #94a3b8; display: block"
+            >MASUK</span
+          >
+          <strong style="color: #10b981; font-size: 0.9rem" id="total-income"
+            >Rp 0</strong
+          >
+        </div>
+        <div
+          style="
+            background: white;
+            padding: 15px;
+            border-radius: 20px;
+            flex: 1;
+            text-align: center;
+          "
+        >
+          <span style="font-size: 0.6rem; color: #94a3b8; display: block"
+            >KELUAR</span
+          >
+          <strong style="color: #ef4444; font-size: 0.9rem" id="total-expense"
+            >Rp 0</strong
+          >
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 12px; margin-bottom: 30px">
+        <button
+          onclick="openMoneyModal('income')"
+          style="
+            flex: 1;
+            padding: 18px;
+            border: none;
+            border-radius: 22px;
+            background: #f0fdf4;
+            color: #16a34a;
+            font-weight: 800;
+          "
+        >
+          <i class="fas fa-plus"></i> MASUK
+        </button>
+        <button
+          onclick="openMoneyModal('expense')"
+          style="
+            flex: 1;
+            padding: 18px;
+            border: none;
+            border-radius: 22px;
+            background: #fef2f2;
+            color: #dc2626;
+            font-weight: 800;
+          "
+        >
+          <i class="fas fa-minus"></i> KELUAR
+        </button>
+      </div>
+
+      <div
+        style="
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 15px;
+        "
+      >
+        <h4 style="margin: 0; color: #1e293b">Riwayat</h4>
+        <div style="display: flex; gap: 8px">
+          <button
+            onclick="clearAllTransactions()"
+            style="
+              background: #fef2f2;
+              color: #ef4444;
+              border: none;
+              padding: 8px 12px;
+              border-radius: 12px;
+              font-weight: 700;
+              font-size: 0.75rem;
+            "
+          >
+            <i class="fas fa-trash-alt"></i> Bersihkan
+          </button>
+          <button
+            onclick="showReceipt()"
+            style="
+              background: #6366f1;
+              color: white;
+              border: none;
+              padding: 8px 12px;
+              border-radius: 12px;
+              font-weight: 700;
+              font-size: 0.75rem;
+            "
+          >
+            <i class="fas fa-file-invoice"></i> Struk
+          </button>
+        </div>
+      </div>
+
+      <div id="transaction-list"></div>
+
+      <div class="chart-section">
+        <h4 style="margin: 0 0 15px 0; font-size: 0.8rem; color: #64748b">
+          TREN SALDO (7 HARI)
+        </h4>
+        <div style="height: 200px"><canvas id="financeChart"></canvas></div>
+      </div>
+    </div>
+
+    <div id="money-modal" class="modal">
+      <div class="modal-content">
+        <h3 id="modal-title" style="text-align: center; margin-bottom: 20px">
+          -
+        </h3>
+        <input
+          type="number"
+          id="amount-input"
+          class="modal-input"
+          placeholder="Jumlah (Rp)"
+          inputmode="numeric"
+          style="
+            width: 100%;
+            padding: 15px;
+            border-radius: 15px;
+            border: 1px solid #f1f5f9;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+          "
+        />
+        <input
+          type="text"
+          id="desc-input"
+          class="modal-input"
+          placeholder="Keterangan"
+          style="
+            width: 100%;
+            padding: 15px;
+            border-radius: 15px;
+            border: 1px solid #f1f5f9;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+          "
+        />
+        <div style="display: flex; gap: 10px">
+          <button
+            onclick="closeMoneyModal()"
+            style="
+              flex: 1;
+              padding: 15px;
+              border: none;
+              border-radius: 15px;
+              background: #f1f5f9;
+              color: #64748b;
+              font-weight: 700;
+            "
+          >
+            Batal
+          </button>
+          <button
+            id="save-money-btn"
+            style="
+              flex: 1;
+              padding: 15px;
+              border: none;
+              border-radius: 15px;
+              background: #6366f1;
+              color: white;
+              font-weight: 700;
+            "
+          >
+            Simpan
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="receipt-modal" class="modal">
+      <div class="modal-content" style="max-width: 320px; padding: 15px">
+        <div id="receipt-area">
+          <div style="text-align: center">
+            <h3 style="margin: 0">PERSONAL OS MART</h3>
+            <p style="font-size: 0.6rem">BUKTI TRANSAKSI DIGITAL</p>
+            <p id="r-date" style="font-size: 0.6rem"></p>
+          </div>
+          <div class="receipt-line"></div>
+          <div id="r-items" style="font-size: 0.7rem"></div>
+          <div class="receipt-line"></div>
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              font-weight: bold;
+              font-size: 0.8rem;
+            "
+          >
+            <span>TOTAL AKHIR</span>
+            <span id="r-total"></span>
+          </div>
+          <div class="receipt-line"></div>
+          <div style="text-align: center; font-size: 0.6rem; margin-top: 10px">
+            <p>TERIMA KASIH TELAH MENCATAT</p>
+            <p>SIMPAN STRUK INI SEBAGAI BUKTI</p>
+          </div>
+        </div>
+        <button
+          onclick="downloadReceiptPNG()"
+          style="
+            width: 100%;
+            padding: 15px;
+            margin-top: 15px;
+            border: none;
+            border-radius: 15px;
+            background: #10b981;
+            color: white;
+            font-weight: 800;
+          "
+        >
+          <i class="fas fa-download"></i> Simpan Gambar (PNG)
+        </button>
+        <button
+          onclick="document.getElementById('receipt-modal').style.display='none'"
+          style="
+            width: 100%;
+            border: none;
+            background: none;
+            margin-top: 10px;
+            color: #94a3b8;
+            font-size: 0.8rem;
+          "
+        >
+          Tutup
+        </button>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="../assets/js/money.js"></script>
+  </body>
+</html>

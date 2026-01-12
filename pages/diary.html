@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Diary Harian | Personal OS</title>
+    <link rel="icon" type="image/png" href="assets/img/logo.png" />
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <link rel="stylesheet" href="../assets/css/diary.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body class="diary-page">
+    <div class="wrapper">
+      <header class="header-nav">
+        <a href="../index.html" class="back-btn"
+          ><i class="fas fa-arrow-left"></i
+        ></a>
+        <h2>Jurnal Harian</h2>
+      </header>
+
+      <div id="diary-list" class="diary-container"></div>
+    </div>
+
+    <button id="fab-add" onclick="openModal()">
+      <i class="fas fa-pen-fancy"></i>
+    </button>
+
+    <div id="diary-modal" class="modal">
+      <div class="modal-content glass-card">
+        <h3 id="modal-title">Cerita Baru</h3>
+        <div class="mood-selector">
+          <div class="mood-options">
+            <span class="mood-btn" data-mood="😊">😊</span>
+            <span class="mood-btn" data-mood="🤩">🤩</span>
+            <span class="mood-btn" data-mood="😴">😴</span>
+            <span class="mood-btn" data-mood="😔">😔</span>
+            <span class="mood-btn" data-mood="😡">😡</span>
+          </div>
+        </div>
+        <textarea
+          id="diary-input"
+          placeholder="Tuliskan isi hatimu..."
+        ></textarea>
+        <div class="modal-actions">
+          <button onclick="closeModal()" class="cancel-btn">Batal</button>
+          <button id="save-diary-btn" class="save-btn">Simpan</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="pin-modal" class="modal" style="display: flex">
+      <div class="modal-content glass-card" style="text-align: center">
+        <i
+          class="fas fa-lock"
+          style="font-size: 2rem; color: #6366f1; margin-bottom: 10px"
+        ></i>
+        <h3>Masukkan PIN</h3>
+        <p style="font-size: 0.8rem; color: #64748b; margin-bottom: 15px">
+          Akses Jurnal Pribadi
+        </p>
+        <input
+          type="password"
+          id="pin-input"
+          maxlength="4"
+          placeholder="****"
+          style="
+            text-align: center;
+            font-size: 2rem;
+            letter-spacing: 15px;
+            border-radius: 15px;
+            border: 1.5px solid #e2e8f0;
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            outline: none;
+          "
+        />
+        <button id="unlock-btn" class="save-btn" style="width: 100%">
+          Buka Kunci
+        </button>
+      </div>
+    </div>
+
+    <script src="../assets/js/diary.js"></script>
+  </body>
+</html>
