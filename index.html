@@ -7,7 +7,6 @@
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
     <title>LiusProject - Personal OS</title>
-    <link rel="stylesheet" href="assets/css/style.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap"
       rel="stylesheet"
@@ -17,59 +16,61 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
     <style>
-      /* --- CORE LAYOUT --- */
+      :root {
+        --primary: #6366f1;
+        --bg: #f8fafc;
+        --text: #1e293b;
+        --danger: #ef4444;
+      }
       body {
-        background: #f8fafc;
+        background: var(--bg);
         margin: 0;
+        font-family: "Plus Jakarta Sans", sans-serif;
+        color: var(--text);
         display: flex;
         flex-direction: column;
         height: 100vh;
         overflow: hidden;
-        font-family: "Plus Jakarta Sans", sans-serif;
       }
 
-      /* HEADER AREA */
-      .sticky-header {
-        flex-shrink: 0;
+      /* HEADER & STATS */
+      .header-kai {
         background: white;
-        padding: 40px 20px 20px;
+        padding: 30px 20px 15px;
         text-align: center;
         border-bottom: 1px solid #f1f5f9;
       }
       #digital-clock {
-        font-size: 4.5rem;
+        font-size: 3.5rem;
         font-weight: 800;
-        color: #1e293b;
         letter-spacing: -2px;
+        margin: 0;
         line-height: 1;
       }
       #current-date {
-        font-size: 1.1rem;
+        font-size: 0.95rem;
         color: #64748b;
-        margin-top: 5px;
+        margin: 10px 0 20px;
       }
-
-      /* BANNER STATS */
-      .stat-banner {
+      .kai-stats {
         display: flex;
         justify-content: space-around;
         background: #fdfdfd;
-        margin-top: 20px;
         padding: 15px;
         border-radius: 20px;
         border: 1px solid #f1f5f9;
       }
-      .stat-item {
+      .stat-box {
+        text-align: center;
         flex: 1;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
       }
       .stat-val {
+        display: block;
         font-weight: 800;
-        color: #6366f1;
+        color: var(--primary);
+        font-size: 1.1rem;
       }
-      .stat-label {
+      .stat-lab {
         font-size: 0.65rem;
         color: #94a3b8;
         font-weight: 700;
@@ -81,41 +82,174 @@
         height: 30px;
       }
 
-      /* CONTENT AREA */
-      .scrollable-content {
-        flex-grow: 1;
-        overflow-y: auto;
-        padding: 20px 20px 120px;
-      }
-      .menu-grid {
+      /* MENU GRID */
+      .kai-menu-container {
+        padding: 20px;
         display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 15px;
-        margin-top: 20px;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
       }
-      .menu-item {
-        padding: 25px 15px;
-        background: white;
-        border-radius: 25px;
+      .kai-menu-item {
+        text-decoration: none;
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 12px;
-        text-decoration: none;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
-        border: 1px solid #f1f5f9;
+        gap: 8px;
       }
-      .menu-item i {
-        font-size: 1.8rem;
-        color: #6366f1;
+      .icon-circle {
+        width: 60px;
+        height: 60px;
+        background: white;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        transition: transform 0.2s;
       }
-      .menu-item span {
+      .kai-menu-item:active .icon-circle {
+        transform: scale(0.9);
+      }
+      .kai-menu-item i {
+        font-size: 1.5rem;
+        color: var(--primary);
+      }
+      .kai-menu-item span {
+        font-size: 0.75rem;
         font-weight: 700;
-        color: #1e293b;
-        font-size: 0.85rem;
+        color: var(--text);
       }
 
-      /* --- FOOTER NAV (Z-INDEX FIXED) --- */
+      /* INFO PENTING AREA */
+      .content-area {
+        flex-grow: 1;
+        overflow-y: auto;
+        padding: 0 20px 100px;
+      }
+      .section-title {
+        font-size: 0.9rem;
+        font-weight: 800;
+        margin-bottom: 15px;
+        color: #475569;
+        text-transform: uppercase;
+      }
+
+      /* CARD STYLE (FIXED & CLICKABLE) */
+      .warning-card {
+        background: white;
+        padding: 18px;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        border-left: 6px solid var(--primary);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+        margin-bottom: 12px;
+        cursor: pointer;
+        position: relative;
+        transition: all 0.2s;
+      }
+      .warning-card::after {
+        content: "\f054";
+        font-family: "Font Awesome 6 Free";
+        font-weight: 900;
+        position: absolute;
+        right: 20px;
+        color: #cbd5e1;
+        font-size: 0.8rem;
+      }
+      .warning-card:active {
+        transform: scale(0.97);
+        background: #f8fafc;
+      }
+      .warning-card.danger {
+        border-left-color: var(--danger);
+      }
+      .warning-info h4 {
+        margin: 0;
+        font-size: 0.9rem;
+        color: var(--text);
+      }
+      .warning-info p {
+        margin: 4px 0 0;
+        font-size: 0.8rem;
+        color: #64748b;
+        line-height: 1.4;
+      }
+
+      /* MODAL TENTANG (VERSI FIXED COLOR) */
+      .modal-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(
+          15,
+          23,
+          42,
+          0.7
+        ); /* Background luar lebih gelap biar fokus */
+        backdrop-filter: blur(4px);
+        z-index: 9999;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .modal-card {
+        background: #ffffff; /* Putih bersih */
+        padding: 20px;
+        border-radius: 28px;
+        width: 80%;
+        max-width: 250px;
+        text-align: center;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        border: none; /* Pastikan tidak ada border hitam */
+      }
+
+      /* Ikon Roket - Pakai warna primary biru/ungu kamu */
+      .modal-card i.fa-rocket {
+        font-size: 2.5rem;
+        color: #6366f1; /* Warna biru primary */
+        margin: 10px 0 15px;
+        display: inline-block;
+      }
+
+      /* Judul Modal */
+      .modal-card h2 {
+        font-size: 1.2rem;
+        color: #1e293b; /* Hitam pekat agar jelas */
+        font-weight: 800;
+        margin: 0 0 10px;
+      }
+
+      /* Deskripsi Modal */
+      .modal-card p {
+        font-size: 0.85rem;
+        color: #475569; /* Abu-abu gelap agar tetap kebaca */
+        line-height: 1.5;
+        margin-bottom: 15px;
+      }
+
+      /* TOMBOL OKE (Kunci perbaikan warna di sini) */
+      .modal-btn {
+        width: 100%;
+        background: #6366f1 !important; /* Pakai !important biar gak ketimpa */
+        color: #ffffff !important; /* Teks wajib putih */
+        border: none;
+        padding: 12px;
+        border-radius: 15px;
+        font-weight: 800;
+        font-size: 0.8rem;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        transition: 0.2s;
+      }
+
+      .modal-btn:active {
+        transform: scale(0.95);
+        background: #4f46e5 !important;
+      }
+
+      /* BOTTOM NAV */
       .bottom-nav {
         position: fixed;
         bottom: 20px;
@@ -125,125 +259,94 @@
         max-width: 400px;
         background: white;
         display: flex;
-        justify-content: space-around;
-        align-items: center;
-        padding: 15px 10px;
+        padding: 12px;
         border-radius: 25px;
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-        z-index: 5000; /* Supaya bisa diklik */
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        z-index: 5000;
         border: 1px solid #e2e8f0;
       }
       .nav-btn {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        background: none;
+        flex: 1;
         border: none;
+        background: none;
         color: #94a3b8;
         font-size: 0.7rem;
         font-weight: 700;
-        gap: 5px;
         cursor: pointer;
-        width: 33%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
       }
       .nav-btn i {
         font-size: 1.3rem;
       }
       .nav-profile-img {
-        width: 28px;
-        height: 28px;
+        width: 26px;
+        height: 26px;
         border-radius: 50%;
+        border: 2px solid var(--primary);
         object-fit: cover;
-        border: 2px solid #6366f1;
-      }
-
-      /* --- MODAL PROFIL (FULL FIXED) --- */
-      .modal-overlay {
-        display: none; /* Default hidden */
-        position: fixed;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.7);
-        z-index: 9999; /* Paling atas */
-        align-items: center;
-        justify-content: center;
-        padding: 20px;
-      }
-      .modal-card {
-        background: white;
-        width: 100%;
-        max-width: 320px;
-        padding: 30px;
-        border-radius: 35px;
-        text-align: center;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-      }
-      .profile-input {
-        width: 100%;
-        padding: 12px;
-        margin: 15px 0;
-        border-radius: 12px;
-        border: 1px solid #e2e8f0;
-        text-align: center;
-        font-size: 1rem;
-        font-weight: 600;
-      }
-      .btn-save {
-        background: #6366f1;
-        color: white;
-        border: none;
-        padding: 12px 30px;
-        border-radius: 15px;
-        font-weight: 700;
-        width: 100%;
       }
     </style>
   </head>
-  <body class="dashboard-page">
-    <header class="sticky-header">
+  <body>
+    <header class="header-kai">
       <div id="digital-clock">00:00</div>
       <div id="current-date">Memuat...</div>
 
-      <div class="stat-banner">
-        <div class="stat-item">
-          <span class="stat-val" id="stat-todo">0%</span
-          ><span class="stat-label">Tugas</span>
+      <div class="kai-stats">
+        <div class="stat-box">
+          <span class="stat-val" id="stat-todo">0%</span>
+          <span class="stat-lab">Tugas</span>
         </div>
         <div class="divider"></div>
-        <div class="stat-item">
-          <span class="stat-val" id="stat-money">Rp 0</span
-          ><span class="stat-label">Saldo</span>
+        <div class="stat-box">
+          <span class="stat-val" id="stat-money">Rp 0</span>
+          <span class="stat-lab">Saldo</span>
         </div>
         <div class="divider"></div>
-        <div class="stat-item">
-          <span class="stat-val" id="stat-schedule">0</span
-          ><span class="stat-label">Kuliah</span>
+        <div class="stat-box">
+          <span class="stat-val" id="stat-schedule">0</span>
+          <span class="stat-lab">Kuliah</span>
         </div>
       </div>
     </header>
 
-    <main class="scrollable-content">
-      <div class="menu-grid">
-        <a href="pages/todo.html" class="menu-item"
-          ><i class="fas fa-tasks"></i><span>To-Do</span></a
-        >
-        <a href="pages/diary.html" class="menu-item"
-          ><i class="fas fa-book"></i><span>Diary</span></a
-        >
-        <a href="pages/money.html" class="menu-item"
-          ><i class="fas fa-wallet"></i><span>Uang</span></a
-        >
-        <a href="pages/jadwal.html" class="menu-item"
-          ><i class="fas fa-university"></i><span>Jadwal</span></a
-        >
-      </div>
+    <div class="kai-menu-container">
+      <a href="pages/todo.html" class="kai-menu-item">
+        <div class="icon-circle"><i class="fas fa-list-check"></i></div>
+        <span>To-Do</span>
+      </a>
+      <a href="pages/diary.html" class="kai-menu-item">
+        <div class="icon-circle"><i class="fas fa-book-open"></i></div>
+        <span>Diary</span>
+      </a>
+      <a href="pages/money.html" class="kai-menu-item">
+        <div class="icon-circle"><i class="fas fa-wallet"></i></div>
+        <span>Uang</span>
+      </a>
+      <a href="pages/jadwal.html" class="kai-menu-item">
+        <div class="icon-circle"><i class="fas fa-university"></i></div>
+        <span>Jadwal</span>
+      </a>
+    </div>
+
+    <main class="content-area">
+      <h3 class="section-title">Info Penting</h3>
+      <div id="warning-container"></div>
     </main>
 
     <nav class="bottom-nav">
       <button class="nav-btn" onclick="toggleAbout()">
-        <i class="fas fa-info-circle"></i><span>Info</span>
+        <i class="fas fa-circle-info"></i>Info
       </button>
-      <a href="https://instagram.com" target="_blank" class="nav-btn">
-        <i class="fab fa-instagram"></i><span>Medsos</span>
+      <a
+        href="https://instagram.com"
+        class="nav-btn"
+        style="text-decoration: none"
+      >
+        <i class="fab fa-instagram"></i>Medsos
       </a>
       <button class="nav-btn" onclick="toggleProfileModal()">
         <img
@@ -255,206 +358,76 @@
       </button>
     </nav>
 
-    <div id="profile-modal" class="modal-overlay">
+    <div id="about-modal" class="modal-overlay">
       <div class="modal-card">
-        <div
+        <i class="fas fa-rocket"></i>
+        <h2 style="margin: 0; font-weight: 800">Tentang website</h2>
+        <p
           style="
-            position: relative;
-            width: 100px;
-            height: 100px;
-            margin: 0 auto 15px;
+            color: #64748b;
+            font-size: 0.95rem;
+            margin-top: 15px;
+            line-height: 1.6;
           "
         >
-          <img
-            id="user-avatar-large"
-            src="https://via.placeholder.com/150"
-            style="
-              width: 100%;
-              height: 100%;
-              border-radius: 30px;
-              object-fit: cover;
-            "
-          />
-          <label
-            for="avatar-input"
-            style="
-              position: absolute;
-              bottom: 0;
-              right: 0;
-              background: #6366f1;
-              color: white;
-              width: 30px;
-              height: 30px;
-              border-radius: 10px;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              border: 3px solid white;
-            "
-          >
-            <i class="fas fa-camera" style="font-size: 0.8rem"></i>
-          </label>
-          <input
-            type="file"
-            id="avatar-input"
-            hidden
-            accept="image/*"
-            onchange="handleImageUpload(event)"
-          />
+          Website ini adalah bertujuan untuk bantu mahasiswa kelola tugas,
+          keuangan, dan jadwal kuliah dalam satu tempat.
+        </p>
+        <div
+          style="
+            border-top: 1px solid #f1f5f9;
+            margin-top: 20px;
+            padding-top: 15px;
+            color: #94a3b8;
+            font-size: 0.8rem;
+          "
+        >
+          @liusretang 1.0.0 © 2026
         </div>
+        <button class="modal-btn" onclick="toggleAbout()">Oke, Ngerti!</button>
+      </div>
+    </div>
+
+    <div id="profile-modal" class="modal-overlay">
+      <div class="modal-card">
+        <img
+          id="user-avatar-large"
+          src="https://via.placeholder.com/150"
+          style="
+            width: 100px;
+            height: 100px;
+            border-radius: 25px;
+            object-fit: cover;
+            margin-bottom: 20px;
+          "
+        />
         <input
           type="text"
           id="user-name-input"
-          class="profile-input"
-          placeholder="Masukkan Nama"
+          style="
+            width: 100%;
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid #ddd;
+            text-align: center;
+          "
+          placeholder="Nama Anda"
         />
-        <button class="btn-save" onclick="saveProfile()">Simpan</button>
+        <button class="modal-btn" onclick="saveProfile()">SIMPAN</button>
         <p
           onclick="toggleProfileModal()"
           style="
             margin-top: 15px;
             color: #94a3b8;
             cursor: pointer;
-            font-weight: 600;
+            font-size: 0.8rem;
           "
         >
-          Batal
+          Tutup
         </p>
       </div>
     </div>
-    <div id="about-modal" class="modal-overlay" onclick="toggleAbout()">
-      <div class="modal-card" onclick="event.stopPropagation()">
-        <i
-          class="fas fa-rocket"
-          style="font-size: 2.5rem; color: #6366f1; margin-bottom: 10px"
-        ></i>
-        <h3 style="margin: 0; color: #1e293b">Tentang website</h3>
-        <p
-          style="
-            color: #64748b;
-            font-size: 0.9rem;
-            margin-top: 10px;
-            line-height: 1.5;
-          "
-        >
-          Website ini adalah bertujuan untuk bantu mahasiswa kelola tugas,
-          keuangan, dan jadwal kuliah dalam satu tempat.
-        </p>
-        <hr style="border: 0; border-top: 1px solid #f1f5f9; margin: 15px 0" />
-        <p style="font-size: 0.75rem; color: #94a3b8">
-          @liusretang 1.0.0 © 2026
-        </p>
-        <button
-          class="btn-save"
-          onclick="toggleAbout()"
-          style="margin-top: 10px"
-        >
-          Oke, Ngerti!
-        </button>
-      </div>
-    </div>
 
-    <script>
-      // --- JAVASCRIPT LANGSUNG DISINI BIAR PASTI JALAN ---
-
-      function toggleProfileModal() {
-        const modal = document.getElementById("profile-modal");
-        modal.style.display = modal.style.display === "flex" ? "none" : "flex";
-      }
-
-      function toggleAbout() {
-        const modal = document.getElementById("about-modal");
-        modal.style.display = modal.style.display === "flex" ? "none" : "flex";
-      }
-
-      function handleImageUpload(event) {
-        const file = event.target.files[0];
-        if (file) {
-          const reader = new FileReader();
-          reader.onload = function (e) {
-            const imgData = e.target.result;
-            document.getElementById("user-avatar-large").src = imgData;
-            document.getElementById("nav-avatar").src = imgData;
-            localStorage.setItem("userAvatar", imgData);
-          };
-          reader.readAsDataURL(file);
-        }
-      }
-
-      function saveProfile() {
-        const name = document.getElementById("user-name-input").value;
-        if (name) {
-          localStorage.setItem("userName", name);
-          toggleProfileModal();
-          alert("Profil Disimpan!");
-        }
-      }
-
-      function loadProfile() {
-        const name = localStorage.getItem("userName") || "User";
-        const avatar =
-          localStorage.getItem("userAvatar") ||
-          "https://via.placeholder.com/150";
-        document.getElementById("user-name-input").value = name;
-        document.getElementById("nav-avatar").src = avatar;
-        document.getElementById("user-avatar-large").src = avatar;
-      }
-
-      function updateClock() {
-        const now = new Date();
-        const h = String(now.getHours()).padStart(2, "0");
-        const m = String(now.getMinutes()).padStart(2, "0");
-        document.getElementById("digital-clock").textContent = `${h}:${m}`;
-        const opt = {
-          weekday: "long",
-          day: "numeric",
-          month: "long",
-          year: "numeric",
-        };
-        document.getElementById("current-date").textContent =
-          now.toLocaleDateString("id-ID", opt);
-      }
-
-      function updateStats() {
-        // Stats To-Do
-        const todos = JSON.parse(localStorage.getItem("todos")) || [];
-        const done = todos.filter((t) => t.completed).length;
-        const percent =
-          todos.length === 0 ? 0 : Math.round((done / todos.length) * 100);
-        document.getElementById("stat-todo").innerText = percent + "%";
-
-        // Stats Keuangan
-        const trans = JSON.parse(localStorage.getItem("transactions")) || [];
-        let bal = 0;
-        trans.forEach((t) =>
-          t.type === "income" ? (bal += t.amount) : (bal -= t.amount)
-        );
-        document.getElementById("stat-money").innerText =
-          "Rp " + (bal >= 1000 ? (bal / 1000).toFixed(0) + "k" : bal);
-
-        // Stats Jadwal
-        const sch = JSON.parse(localStorage.getItem("schedules")) || [];
-        const hari = [
-          "Minggu",
-          "Senin",
-          "Selasa",
-          "Rabu",
-          "Kamis",
-          "Jumat",
-          "Sabtu",
-        ][new Date().getDay()];
-        document.getElementById("stat-schedule").innerText = sch.filter(
-          (s) => s.day === hari
-        ).length;
-      }
-
-      // Jalankan semua fungsi
-      window.onload = () => {
-        updateClock();
-        updateStats();
-        loadProfile();
-        setInterval(updateClock, 1000);
-      };
-    </script>
+    <script src="assets/js/main.js"></script>
   </body>
 </html>
