@@ -1,12 +1,11 @@
 /* --- VARIABLE & RESET --- */
 :root {
-  --bg-main: #f0f2f5;
-  --glass-bg: rgba(255, 255, 255, 0.8);
+  --primary: #6366f1;
+  --bg: #f8fafc;
+  --text: #1e293b;
+  --danger: #ef4444;
+  --glass-bg: rgba(255, 255, 255, 0.85);
   --glass-border: rgba(255, 255, 255, 0.4);
-  --text-dark: #1e293b;
-  --text-muted: #64748b;
-  --accent-indigo: #6366f1;
-  --accent-purple: #a855f7;
 }
 
 * {
@@ -17,175 +16,268 @@
 }
 
 body {
+  background: #cbd5e1; /* Warna luar container */
+  margin: 0;
   font-family: "Plus Jakarta Sans", sans-serif;
-  background-color: var(--bg-main);
-  color: var(--text-dark);
+  color: var(--text);
+  display: flex;
+  justify-content: center;
   min-height: 100vh;
-  overflow-x: hidden;
+}
+
+/* --- CONTAINER UTAMA (RESPONSIVE) --- */
+.app-container {
+  width: 100%;
+  max-width: 500px; /* Sedikit lebih lebar untuk kenyamanan di tablet/laptop */
+  background: var(--bg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
   position: relative;
+  box-shadow: 0 0 100px rgba(0, 0, 0, 0.15);
+  overflow-x: hidden;
 }
 
-/* --- DEKORASI BACKGROUND (TETAP DI BELAKANG) --- */
-.bg-blur-circle-1 {
-  position: fixed;
-  top: -50px;
-  right: -50px;
-  width: 200px;
-  height: 200px;
-  background: #c7d2fe;
-  filter: blur(80px);
-  z-index: -1;
-}
-
+/* --- DEKORASI BACKGROUND --- */
+.bg-blur-circle-1,
 .bg-blur-circle-2 {
   position: fixed;
+  z-index: -1;
+  filter: blur(80px);
+  border-radius: 50%;
+}
+.bg-blur-circle-1 {
+  top: -50px;
+  right: -50px;
+  width: 250px;
+  height: 250px;
+  background: #c7d2fe;
+}
+.bg-blur-circle-2 {
   bottom: 10%;
   left: -50px;
-  width: 150px;
-  height: 150px;
+  width: 200px;
+  height: 200px;
   background: #fbcfe8;
-  filter: blur(60px);
-  z-index: -1;
 }
 
-/* --- STICKY HEADER (PANAH TIDAK HILANG) --- */
-.header-nav {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  background: var(--glass-bg);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-  border-bottom: 1px solid var(--glass-border);
-  padding: 15px 20px;
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-/* Kotak Putih untuk Tombol Back */
-.back-btn {
-  width: 42px;
-  height: 42px;
+/* --- HEADER & CLOCK --- */
+.header-kai {
   background: white;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  color: var(--accent-indigo);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  transition: 0.2s;
-}
-
-.back-btn:active {
-  transform: scale(0.9);
-}
-
-.header-nav h2 {
-  font-size: 1.25rem;
-  font-weight: 800;
-  letter-spacing: -0.5px;
-}
-
-/* --- WRAPPER UTAMA --- */
-.wrapper {
-  padding: 20px;
-  max-width: 480px;
-  margin: 0 auto;
-}
-
-/* --- DASHBOARD COMPONENTS (INDEX.HTML) --- */
-.clock-section {
+  padding: 40px 20px 20px;
   text-align: center;
-  padding: 40px 0;
+  border-bottom: 1px solid #f1f5f9;
 }
-
 #digital-clock {
-  font-size: 4.8rem;
+  font-size: 4rem;
   font-weight: 800;
-  color: var(--text-dark);
   letter-spacing: -3px;
-  line-height: 1;
+  margin: 0;
+  color: var(--text);
 }
-
 #current-date {
-  font-size: 1.1rem;
-  color: var(--text-muted);
-  font-weight: 500;
-  margin-top: 10px;
-}
-
-.quote-card {
-  background: white;
-  padding: 25px;
-  border-radius: 24px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.02);
-  margin-bottom: 30px;
-  text-align: center;
-}
-
-.quote-text {
   font-size: 1rem;
-  line-height: 1.6;
-  font-style: italic;
-  margin-bottom: 8px;
+  color: #64748b;
+  margin: 8px 0 25px;
+  font-weight: 500;
 }
 
-.quote-author {
-  font-size: 0.8rem;
-  color: var(--accent-indigo);
-  font-weight: 700;
+/* STATS BAR */
+.kai-stats {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background: #fdfdfd;
+  padding: 18px;
+  border-radius: 24px;
+  border: 1px solid #f1f5f9;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+}
+.stat-val {
+  display: block;
+  font-weight: 800;
+  color: var(--primary);
+  font-size: 1.15rem;
+}
+.stat-lab {
+  font-size: 0.65rem;
+  color: #94a3b8;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+.divider {
+  width: 1px;
+  background: #f1f5f9;
+  height: 35px;
 }
 
-/* --- GRID MENU --- */
-.menu-grid {
+/* --- MENU GRID --- */
+.kai-menu-container {
+  padding: 25px 20px;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(4, 1fr);
   gap: 15px;
 }
-
-.glass-card {
-  background: var(--glass-bg);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--glass-border);
-  padding: 20px 15px;
-  border-radius: 24px;
+.kai-menu-item {
+  text-decoration: none;
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 10px;
+  transition: 0.3s;
+}
+.icon-circle {
+  width: 65px;
+  height: 65px;
+  background: white;
+  border-radius: 22px;
+  display: flex;
+  align-items: center;
   justify-content: center;
-  gap: 12px;
-  text-decoration: none;
-  color: var(--text-dark);
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.04);
+  border: 1px solid #f8fafc;
 }
-
-.glass-card i {
-  font-size: 1.8rem;
-  background: linear-gradient(
-    135deg,
-    var(--accent-indigo),
-    var(--accent-purple)
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.kai-menu-item i {
+  font-size: 1.6rem;
+  color: var(--primary);
 }
-
-.glass-card span {
+.kai-menu-item span {
+  font-size: 0.8rem;
   font-weight: 700;
-  font-size: 0.9rem;
+  color: var(--text);
+}
+.kai-menu-item:hover .icon-circle {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 20px rgba(99, 102, 241, 0.15);
 }
 
-.glass-card:active {
-  transform: scale(0.95);
+/* --- CONTENT AREA --- */
+.content-area {
+  flex-grow: 1;
+  padding: 10px 20px 120px;
+}
+.section-title {
+  font-size: 0.85rem;
+  font-weight: 800;
+  margin-bottom: 15px;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
-/* --- RESPONSIVE LAYOUT --- */
+/* CARDS */
+.warning-card {
+  background: white;
+  padding: 20px;
+  border-radius: 22px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  border-left: 6px solid var(--primary);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.02);
+  margin-bottom: 15px;
+}
+.warning-card.danger {
+  border-left-color: var(--danger);
+}
+
+/* --- BOTTOM NAV --- */
+.bottom-nav {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  display: flex;
+  padding: 12px;
+  border-radius: 22px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  justify-content: space-around;
+  z-index: 1000;
+}
+.nav-link {
+  text-decoration: none;
+  color: #94a3b8;
+  font-size: 0.75rem;
+  font-weight: 700;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.nav-link i {
+  font-size: 1.2rem;
+}
+.nav-link:hover {
+  color: var(--primary);
+}
+
+/* --- MODAL --- */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(8px);
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+}
+.modal-card {
+  background: white;
+  padding: 35px 25px;
+  border-radius: 32px;
+  width: 85%;
+  max-width: 320px;
+  text-align: center;
+}
+.modal-btn {
+  width: 100%;
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 15px;
+  border-radius: 18px;
+  font-weight: 800;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+/* --- MEDIA QUERIES UNTUK LAYAR BESAR (PC/LAPTOP) --- */
 @media (min-width: 768px) {
-  .wrapper {
-    max-width: 600px;
+  .app-container {
+    max-width: 500px; /* Tetap menjaga feel "OS Handphone" tapi proporsional */
+    margin: 20px 0;
+    min-height: calc(100vh - 40px);
+    border-radius: 40px; /* Memberikan efek layar melengkung di PC */
+  }
+
+  #digital-clock {
+    font-size: 4.5rem;
+  }
+
+  .bottom-nav {
+    width: 85%; /* Sedikit lebih kecil di layar besar agar manis */
+  }
+}
+
+/* Responsif untuk layar sangat kecil */
+@media (max-width: 370px) {
+  .icon-circle {
+    width: 55px;
+    height: 55px;
+  }
+  #digital-clock {
+    font-size: 3rem;
+  }
+  .kai-menu-container {
+    gap: 8px;
   }
 }

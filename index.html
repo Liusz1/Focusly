@@ -15,416 +15,97 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
-    <style>
-      :root {
-        --primary: #6366f1;
-        --bg: #f8fafc;
-        --text: #1e293b;
-        --danger: #ef4444;
-      }
-      body {
-        background: var(--bg);
-        margin: 0;
-        font-family: "Plus Jakarta Sans", sans-serif;
-        color: var(--text);
-        display: flex;
-        flex-direction: column;
-        height: 100vh;
-        overflow: hidden;
-      }
-
-      /* HEADER & STATS */
-      .header-kai {
-        background: white;
-        padding: 30px 20px 15px;
-        text-align: center;
-        border-bottom: 1px solid #f1f5f9;
-      }
-      #digital-clock {
-        font-size: 3.5rem;
-        font-weight: 800;
-        letter-spacing: -2px;
-        margin: 0;
-        line-height: 1;
-      }
-      #current-date {
-        font-size: 0.95rem;
-        color: #64748b;
-        margin: 10px 0 20px;
-      }
-      .kai-stats {
-        display: flex;
-        justify-content: space-around;
-        background: #fdfdfd;
-        padding: 15px;
-        border-radius: 20px;
-        border: 1px solid #f1f5f9;
-      }
-      .stat-box {
-        text-align: center;
-        flex: 1;
-      }
-      .stat-val {
-        display: block;
-        font-weight: 800;
-        color: var(--primary);
-        font-size: 1.1rem;
-      }
-      .stat-lab {
-        font-size: 0.65rem;
-        color: #94a3b8;
-        font-weight: 700;
-        text-transform: uppercase;
-      }
-      .divider {
-        width: 1px;
-        background: #f1f5f9;
-        height: 30px;
-      }
-
-      /* MENU GRID */
-      .kai-menu-container {
-        padding: 20px;
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 10px;
-      }
-      .kai-menu-item {
-        text-decoration: none;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 8px;
-      }
-      .icon-circle {
-        width: 60px;
-        height: 60px;
-        background: white;
-        border-radius: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-        transition: transform 0.2s;
-      }
-      .kai-menu-item:active .icon-circle {
-        transform: scale(0.9);
-      }
-      .kai-menu-item i {
-        font-size: 1.5rem;
-        color: var(--primary);
-      }
-      .kai-menu-item span {
-        font-size: 0.75rem;
-        font-weight: 700;
-        color: var(--text);
-      }
-
-      /* INFO PENTING AREA */
-      .content-area {
-        flex-grow: 1;
-        overflow-y: auto;
-        padding: 0 20px 100px;
-      }
-      .section-title {
-        font-size: 0.9rem;
-        font-weight: 800;
-        margin-bottom: 15px;
-        color: #475569;
-        text-transform: uppercase;
-      }
-
-      /* CARD STYLE (FIXED & CLICKABLE) */
-      .warning-card {
-        background: white;
-        padding: 18px;
-        border-radius: 20px;
-        display: flex;
-        align-items: center;
-        gap: 15px;
-        border-left: 6px solid var(--primary);
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
-        margin-bottom: 12px;
-        cursor: pointer;
-        position: relative;
-        transition: all 0.2s;
-      }
-      .warning-card::after {
-        content: "\f054";
-        font-family: "Font Awesome 6 Free";
-        font-weight: 900;
-        position: absolute;
-        right: 20px;
-        color: #cbd5e1;
-        font-size: 0.8rem;
-      }
-      .warning-card:active {
-        transform: scale(0.97);
-        background: #f8fafc;
-      }
-      .warning-card.danger {
-        border-left-color: var(--danger);
-      }
-      .warning-info h4 {
-        margin: 0;
-        font-size: 0.9rem;
-        color: var(--text);
-      }
-      .warning-info p {
-        margin: 4px 0 0;
-        font-size: 0.8rem;
-        color: #64748b;
-        line-height: 1.4;
-      }
-
-      /* MODAL TENTANG (VERSI FIXED COLOR) */
-      .modal-overlay {
-        display: none;
-        position: fixed;
-        inset: 0;
-        background: rgba(
-          15,
-          23,
-          42,
-          0.7
-        ); /* Background luar lebih gelap biar fokus */
-        backdrop-filter: blur(4px);
-        z-index: 9999;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .modal-card {
-        background: #ffffff; /* Putih bersih */
-        padding: 20px;
-        border-radius: 28px;
-        width: 80%;
-        max-width: 250px;
-        text-align: center;
-        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-        border: none; /* Pastikan tidak ada border hitam */
-      }
-
-      /* Ikon Roket - Pakai warna primary biru/ungu kamu */
-      .modal-card i.fa-rocket {
-        font-size: 2.5rem;
-        color: #6366f1; /* Warna biru primary */
-        margin: 10px 0 15px;
-        display: inline-block;
-      }
-
-      /* Judul Modal */
-      .modal-card h2 {
-        font-size: 1.2rem;
-        color: #1e293b; /* Hitam pekat agar jelas */
-        font-weight: 800;
-        margin: 0 0 10px;
-      }
-
-      /* Deskripsi Modal */
-      .modal-card p {
-        font-size: 0.85rem;
-        color: #475569; /* Abu-abu gelap agar tetap kebaca */
-        line-height: 1.5;
-        margin-bottom: 15px;
-      }
-
-      /* TOMBOL OKE (Kunci perbaikan warna di sini) */
-      .modal-btn {
-        width: 100%;
-        background: #6366f1 !important; /* Pakai !important biar gak ketimpa */
-        color: #ffffff !important; /* Teks wajib putih */
-        border: none;
-        padding: 12px;
-        border-radius: 15px;
-        font-weight: 800;
-        font-size: 0.8rem;
-        cursor: pointer;
-        box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
-        transition: 0.2s;
-      }
-
-      .modal-btn:active {
-        transform: scale(0.95);
-        background: #4f46e5 !important;
-      }
-
-      /* BOTTOM NAV */
-      .bottom-nav {
-        position: fixed;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 90%;
-        max-width: 400px;
-        background: white;
-        display: flex;
-        padding: 12px;
-        border-radius: 25px;
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-        z-index: 5000;
-        border: 1px solid #e2e8f0;
-      }
-      .nav-btn {
-        flex: 1;
-        border: none;
-        background: none;
-        color: #94a3b8;
-        font-size: 0.7rem;
-        font-weight: 700;
-        cursor: pointer;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 4px;
-      }
-      .nav-btn i {
-        font-size: 1.3rem;
-      }
-      .nav-profile-img {
-        width: 26px;
-        height: 26px;
-        border-radius: 50%;
-        border: 2px solid var(--primary);
-        object-fit: cover;
-      }
-    </style>
+    <link rel="stylesheet" href="assets/css/style.css" />
   </head>
   <body>
-    <header class="header-kai">
-      <div id="digital-clock">00:00</div>
-      <div id="current-date">Memuat...</div>
+    <div class="bg-blur-circle-1"></div>
+    <div class="bg-blur-circle-2"></div>
 
-      <div class="kai-stats">
-        <div class="stat-box">
-          <span class="stat-val" id="stat-todo">0%</span>
-          <span class="stat-lab">Tugas</span>
+    <div class="app-container">
+      <header class="header-kai">
+        <div id="digital-clock">00:00</div>
+        <div id="current-date">Memuat...</div>
+
+        <div class="kai-stats">
+          <div class="stat-box">
+            <span class="stat-val" id="stat-todo">0%</span>
+            <span class="stat-lab">Tugas</span>
+          </div>
+          <div class="divider"></div>
+          <div class="stat-box">
+            <span class="stat-val" id="stat-money">Rp 0</span>
+            <span class="stat-lab">Saldo</span>
+          </div>
+          <div class="divider"></div>
+          <div class="stat-box">
+            <span class="stat-val" id="stat-schedule">0</span>
+            <span class="stat-lab">Kuliah</span>
+          </div>
         </div>
-        <div class="divider"></div>
-        <div class="stat-box">
-          <span class="stat-val" id="stat-money">Rp 0</span>
-          <span class="stat-lab">Saldo</span>
+      </header>
+
+      <main class="scrollable-content">
+        <div class="kai-menu-container">
+          <a href="pages/todo.html" class="kai-menu-item">
+            <div class="icon-circle"><i class="fas fa-list-check"></i></div>
+            <span>To-Do</span>
+          </a>
+          <a href="pages/diary.html" class="kai-menu-item">
+            <div class="icon-circle"><i class="fas fa-book-open"></i></div>
+            <span>Diary</span>
+          </a>
+          <a href="pages/money.html" class="kai-menu-item">
+            <div class="icon-circle"><i class="fas fa-wallet"></i></div>
+            <span>Uang</span>
+          </a>
+          <a href="pages/jadwal.html" class="kai-menu-item">
+            <div class="icon-circle"><i class="fas fa-university"></i></div>
+            <span>Jadwal</span>
+          </a>
         </div>
-        <div class="divider"></div>
-        <div class="stat-box">
-          <span class="stat-val" id="stat-schedule">0</span>
-          <span class="stat-lab">Kuliah</span>
+
+        <section class="content-area">
+          <h3 class="section-title">Info Penting</h3>
+          <div id="warning-container">
+            <div class="warning-card">
+              <i class="fas fa-bell"></i>
+              <div>
+                <strong>Selamat Datang!</strong>
+                <p style="font-size: 0.8rem; color: #64748b">
+                  Mulai kelola tugasmu hari ini.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <nav class="bottom-nav">
+        <button class="nav-link" onclick="toggleAbout()">
+          <i class="fas fa-circle-info"></i><span>Info</span>
+        </button>
+        <a href="https://instagram.com" class="nav-link" target="_blank">
+          <i class="fab fa-instagram"></i><span>Medsos</span>
+        </a>
+        <a href="pages/profile.html" class="nav-link">
+          <i class="fas fa-user-circle"></i><span>Profil</span>
+        </a>
+      </nav>
+
+      <div id="about-modal" class="modal-overlay">
+        <div class="modal-card">
+          <i
+            class="fas fa-rocket"
+            style="font-size: 2rem; color: var(--primary); margin-bottom: 15px"
+          ></i>
+          <h3>Lius <span>Project</span></h3>
+          <br />
+          <p>
+            Website ini bertujuan untuk mengelola tugas kuliah/pekerjaan dan
+            keuangan mahasiswa.
+          </p>
+          <button class="modal-btn" onclick="toggleAbout()">Oke!</button>
         </div>
-      </div>
-    </header>
-
-    <div class="kai-menu-container">
-      <a href="pages/todo.html" class="kai-menu-item">
-        <div class="icon-circle"><i class="fas fa-list-check"></i></div>
-        <span>To-Do</span>
-      </a>
-      <a href="pages/diary.html" class="kai-menu-item">
-        <div class="icon-circle"><i class="fas fa-book-open"></i></div>
-        <span>Diary</span>
-      </a>
-      <a href="pages/money.html" class="kai-menu-item">
-        <div class="icon-circle"><i class="fas fa-wallet"></i></div>
-        <span>Uang</span>
-      </a>
-      <a href="pages/jadwal.html" class="kai-menu-item">
-        <div class="icon-circle"><i class="fas fa-university"></i></div>
-        <span>Jadwal</span>
-      </a>
-    </div>
-
-    <main class="content-area">
-      <h3 class="section-title">Info Penting</h3>
-      <div id="warning-container"></div>
-    </main>
-
-    <nav class="bottom-nav">
-      <button class="nav-btn" onclick="toggleAbout()">
-        <i class="fas fa-circle-info"></i>Info
-      </button>
-      <a
-        href="https://instagram.com"
-        class="nav-btn"
-        style="text-decoration: none"
-      >
-        <i class="fab fa-instagram"></i>Medsos
-      </a>
-      <button class="nav-btn" onclick="toggleProfileModal()">
-        <img
-          id="nav-avatar"
-          src="https://via.placeholder.com/150"
-          class="nav-profile-img"
-        />
-        <span>Profil</span>
-      </button>
-    </nav>
-
-    <div id="about-modal" class="modal-overlay">
-      <div class="modal-card">
-        <i class="fas fa-rocket"></i>
-        <h2 style="margin: 0; font-weight: 800">Tentang website</h2>
-        <p
-          style="
-            color: #64748b;
-            font-size: 0.95rem;
-            margin-top: 15px;
-            line-height: 1.6;
-          "
-        >
-          Website ini adalah bertujuan untuk bantu mahasiswa kelola tugas,
-          keuangan, dan jadwal kuliah dalam satu tempat.
-        </p>
-        <div
-          style="
-            border-top: 1px solid #f1f5f9;
-            margin-top: 20px;
-            padding-top: 15px;
-            color: #94a3b8;
-            font-size: 0.8rem;
-          "
-        >
-          @liusretang 1.0.0 © 2026
-        </div>
-        <button class="modal-btn" onclick="toggleAbout()">Oke, Ngerti!</button>
-      </div>
-    </div>
-
-    <div id="profile-modal" class="modal-overlay">
-      <div class="modal-card">
-        <img
-          id="user-avatar-large"
-          src="https://via.placeholder.com/150"
-          style="
-            width: 100px;
-            height: 100px;
-            border-radius: 25px;
-            object-fit: cover;
-            margin-bottom: 20px;
-          "
-        />
-        <input
-          type="text"
-          id="user-name-input"
-          style="
-            width: 100%;
-            padding: 12px;
-            border-radius: 12px;
-            border: 1px solid #ddd;
-            text-align: center;
-          "
-          placeholder="Nama Anda"
-        />
-        <button class="modal-btn" onclick="saveProfile()">SIMPAN</button>
-        <p
-          onclick="toggleProfileModal()"
-          style="
-            margin-top: 15px;
-            color: #94a3b8;
-            cursor: pointer;
-            font-size: 0.8rem;
-          "
-        >
-          Tutup
-        </p>
       </div>
     </div>
 
