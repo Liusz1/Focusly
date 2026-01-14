@@ -7,7 +7,6 @@
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
     <title>To-Do List | Personal OS</title>
-    <link rel="icon" type="image/png" href="assets/img/logo.png" />
     <link rel="stylesheet" href="../assets/css/style.css" />
     <link rel="stylesheet" href="../assets/css/todo.css" />
     <link
@@ -19,34 +18,44 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
   </head>
-  <body class="todo-page">
+  <body>
     <div class="bg-blur-circle-1"></div>
+    <div class="bg-blur-circle-2"></div>
 
-    <div class="wrapper">
-      <header class="header-nav">
-        <a href="../index.html" class="back-btn"
-          ><i class="fas fa-arrow-left"></i
-        ></a>
-        <h2>Tugas Kuliah</h2>
+    <div class="app-container">
+      <header class="header-nav-inline">
+        <a href="../index.html" class="back-btn">
+          <i class="fas fa-arrow-left"></i>
+        </a>
+        <h2 class="page-title-inline">Tugas Kuliah</h2>
       </header>
 
-      <div class="input-section">
-        <input
-          type="text"
-          id="todo-input"
-          placeholder="Apa tugasmu hari ini?"
-        />
-        <div class="input-row">
-          <input type="datetime-local" id="todo-deadline" />
-          <button id="add-btn"><i class="fas fa-plus"></i> Tambah</button>
+      <div class="wrapper-todo">
+        <div class="input-section">
+          <label class="input-label">TUGAS BARU</label>
+          <input
+            type="text"
+            id="todo-input"
+            placeholder="Apa tugasmu hari ini?"
+          />
+
+          <div class="input-row">
+            <div class="input-col">
+              <label class="input-label">DEADLINE</label>
+              <input type="datetime-local" id="todo-deadline" />
+            </div>
+            <button id="add-btn"><i class="fas fa-plus"></i></button>
+          </div>
         </div>
-      </div>
 
-      <div class="filter-bar">
-        <span id="pending-count">0 Tugas Aktif</span>
-      </div>
+        <div class="filter-bar">
+          <span id="pending-count"
+            ><i class="fas fa-clock"></i> 0 Tugas Aktif</span
+          >
+        </div>
 
-      <div id="todo-list" class="task-container"></div>
+        <div id="todo-list" class="task-container"></div>
+      </div>
     </div>
 
     <audio
@@ -54,7 +63,6 @@
       src="../assets/audio/notif_suara.mp3"
       preload="auto"
     ></audio>
-
     <script src="../assets/js/todo.js"></script>
   </body>
 </html>

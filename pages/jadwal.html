@@ -7,8 +7,8 @@
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
     <title>Personal OS | Jadwal Kuliah</title>
-    <link rel="icon" type="image/png" href="assets/img/logo.png" />
     <link rel="stylesheet" href="../assets/css/style.css" />
+    <link rel="stylesheet" href="../assets/css/jadwal.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap"
       rel="stylesheet"
@@ -17,326 +17,82 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
-    <style>
-      /* Modern Schedule Design */
-      .day-selector {
-        display: flex;
-        gap: 12px;
-        overflow-x: auto;
-        padding: 5px 15px 20px;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
-      }
-      .day-selector::-webkit-scrollbar {
-        display: none;
-      }
-
-      .day-btn {
-        padding: 10px 18px;
-        background: #fff;
-        border-radius: 16px;
-        white-space: nowrap;
-        font-weight: 700;
-        font-size: 0.85rem;
-        color: #64748b;
-        border: none;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
-        transition: 0.3s;
-        cursor: pointer;
-      }
-      .day-btn.active {
-        background: #6366f1;
-        color: #fff;
-        box-shadow: 0 8px 15px rgba(99, 102, 241, 0.25);
-      }
-
-      /* Card Matkul Lebih Elegan */
-      #schedule-list {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-        padding: 0 15px;
-      }
-
-      .schedule-card {
-        background: #fff;
-        padding: 20px;
-        border-radius: 24px;
-        display: flex;
-        align-items: center;
-        gap: 15px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
-        border: 1px solid rgba(0, 0, 0, 0.03);
-        transition: all 0.4s ease;
-        position: relative;
-        overflow: hidden;
-      }
-
-      /* Animasi & Style untuk Kelas yang Sedang Berlangsung (NOW/LIVE) */
-      @keyframes pulse-live {
-        0% {
-          opacity: 1;
-          transform: scale(1);
-        }
-        50% {
-          opacity: 0.7;
-          transform: scale(0.95);
-        }
-        100% {
-          opacity: 1;
-          transform: scale(1);
-        }
-      }
-
-      .schedule-card.now {
-        background: linear-gradient(135deg, #ffffff, #f5f3ff);
-        border: 1.5px solid #6366f1;
-        border-left: 6px solid #6366f1;
-        transform: scale(1.02);
-        box-shadow: 0 10px 20px rgba(99, 102, 241, 0.1);
-      }
-
-      .schedule-card.now h4 {
-        color: #6366f1;
-      }
-
-      .time-box {
-        min-width: 75px;
-        text-align: center;
-        border-right: 2px solid #f1f5f9;
-        padding-right: 15px;
-      }
-      .time-box strong {
-        display: block;
-        font-size: 0.95rem;
-        color: #1e293b;
-      }
-      .time-box span {
-        font-size: 0.7rem;
-        color: #94a3b8;
-        font-weight: 700;
-        text-transform: uppercase;
-      }
-
-      .subject-info h4 {
-        font-size: 1rem;
-        color: #1e293b;
-        margin-bottom: 4px;
-        font-weight: 700;
-        display: flex;
-        align-items: center;
-      }
-      .subject-info p {
-        font-size: 0.8rem;
-        color: #64748b;
-        display: flex;
-        align-items: center;
-        gap: 5px;
-      }
-
-      .live-badge {
-        background: #6366f1;
-        color: white;
-        font-size: 0.6rem;
-        padding: 2px 8px;
-        border-radius: 10px;
-        margin-left: 5px;
-        font-weight: 800;
-        vertical-align: middle;
-        animation: pulse-live 1.5s infinite;
-      }
-
-      @keyframes pulse-live {
-        0% {
-          opacity: 1;
-          transform: scale(1);
-        }
-        50% {
-          opacity: 0.7;
-          transform: scale(1.05);
-        }
-        100% {
-          opacity: 1;
-          transform: scale(1);
-        }
-      }
-
-      /* Biar card kalau panjang gak kaku */
-      .schedule-card {
-        transition: all 0.3s ease;
-        border: 1px solid #f1f5f9;
-      }
-
-      .schedule-card.now {
-        border-color: #6366f1;
-        background: #f8faff;
-      }
-
-      /* MODAL DESAIN BARU */
-      .modal {
-        display: none;
-        position: fixed;
-        inset: 0;
-        background: rgba(15, 23, 42, 0.5);
-        backdrop-filter: blur(8px);
-        z-index: 2000;
-        align-items: center;
-        justify-content: center;
-        padding: 20px;
-      }
-      .modal-content {
-        background: #fff;
-        width: 100%;
-        max-width: 350px;
-        padding: 25px;
-        border-radius: 30px;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-      }
-      .modal-content h3 {
-        font-weight: 800;
-        margin-bottom: 20px;
-        text-align: center;
-        color: #1e293b;
-      }
-
-      .modal-input {
-        width: 100%;
-        padding: 12px 15px;
-        margin-bottom: 12px;
-        border-radius: 14px;
-        border: 1.5px solid #f1f5f9;
-        background: #f8fafc;
-        font-family: inherit;
-        font-size: 0.9rem;
-        outline: none;
-        transition: 0.3s;
-        box-sizing: border-box;
-      }
-      .modal-input:focus {
-        border-color: #6366f1;
-        background: #fff;
-      }
-
-      .modal-btns {
-        display: flex;
-        gap: 10px;
-        margin-top: 10px;
-      }
-      .modal-btns button {
-        flex: 1;
-        padding: 12px;
-        border-radius: 12px;
-        border: none;
-        font-weight: 700;
-        cursor: pointer;
-        transition: 0.2s;
-      }
-      .btn-cancel {
-        background: #f1f5f9;
-        color: #64748b;
-      }
-      .btn-save {
-        background: #6366f1;
-        color: #fff;
-      }
-
-      /* TOMBOL TAMBAH (FAB) */
-      .fab-add {
-        position: fixed;
-        bottom: 25px;
-        right: 25px;
-        width: 55px;
-        height: 55px;
-        border-radius: 20px;
-        background: #6366f1;
-        color: #fff;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.3rem;
-        box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
-        border: none;
-        cursor: pointer;
-        z-index: 100;
-        transition: 0.3s;
-      }
-      .fab-add:active {
-        transform: scale(0.9);
-      }
-    </style>
   </head>
-  <body class="schedule-page">
-    <header
-      class="header-nav"
-      style="
-        display: flex;
-        align-items: center;
-        padding: 20px;
-        background: #fff;
-      "
-    >
-      <a
-        href="../index.html"
-        class="back-btn"
-        style="color: #1e293b; font-size: 1.2rem; margin-right: 15px"
-      >
-        <i class="fas fa-arrow-left"></i>
-      </a>
-      <h2 style="font-weight: 800; font-size: 1.25rem; color: #1e293b">
-        Jadwal Kuliah
-      </h2>
-    </header>
+  <body>
+    <div class="app-container">
+      <header class="header-nav-inline">
+        <a href="../index.html" class="back-btn">
+          <i class="fas fa-arrow-left"></i>
+        </a>
+        <h3 class="page-title-inline">Jadwal Harian</h3>
+      </header>
 
-    <div class="wrapper">
-      <div class="day-selector" id="day-selector">
-        <button class="day-btn" onclick="filterDay('Senin')">Senin</button>
-        <button class="day-btn" onclick="filterDay('Selasa')">Selasa</button>
-        <button class="day-btn" onclick="filterDay('Rabu')">Rabu</button>
-        <button class="day-btn" onclick="filterDay('Kamis')">Kamis</button>
-        <button class="day-btn" onclick="filterDay('Jumat')">Jumat</button>
-        <button class="day-btn" onclick="filterDay('Sabtu')">Sabtu</button>
+      <div class="wrapper-jadwal">
+        <div class="day-selector" id="day-selector">
+          <button class="day-btn active" onclick="filterDay('Senin')">
+            Senin
+          </button>
+          <button class="day-btn" onclick="filterDay('Selasa')">Selasa</button>
+          <button class="day-btn" onclick="filterDay('Rabu')">Rabu</button>
+          <button class="day-btn" onclick="filterDay('Kamis')">Kamis</button>
+          <button class="day-btn" onclick="filterDay('Jumat')">Jumat</button>
+          <button class="day-btn" onclick="filterDay('Sabtu')">Sabtu</button>
+        </div>
+
+        <div id="schedule-list" class="schedule-container"></div>
       </div>
 
-      <div id="schedule-list"></div>
-    </div>
+      <div id="schedule-modal" class="modal-overlay-jadwal">
+        <div class="modal-content-jadwal">
+          <h3>Tambah Tugas</h3>
+          <div class="input-group">
+            <label class="input-label">NAMA MATA KULIAH / KERJAAN</label>
+            <input
+              type="text"
+              id="subject-name"
+              placeholder="Contoh: Algoritma"
+            />
+          </div>
 
-    <div id="schedule-modal" class="modal">
-      <div class="modal-content">
-        <h3>Tambah Matkul</h3>
-        <input
-          type="text"
-          id="subject-name"
-          placeholder="Nama Mata Kuliah"
-          class="modal-input"
-        />
-        <div style="display: flex; gap: 10px">
-          <input type="time" id="start-time" class="modal-input" />
-          <input type="time" id="end-time" class="modal-input" />
-        </div>
-        <input
-          type="text"
-          id="room-name"
-          placeholder="Lokasi (Bps, Gmeet, dll)"
-          class="modal-input"
-        />
-        <select id="day-select" class="modal-input">
-          <option value="Senin">Senin</option>
-          <option value="Selasa">Selasa</option>
-          <option value="Rabu">Rabu</option>
-          <option value="Kamis">Kamis</option>
-          <option value="Jumat">Jumat</option>
-          <option value="Sabtu">Sabtu</option>
-        </select>
-        <div class="modal-btns">
-          <button class="btn-cancel" onclick="closeModal()">Batal</button>
-          <button class="btn-save" id="save-schedule-btn">Simpan</button>
+          <div class="input-row-flex">
+            <div class="input-group">
+              <label class="input-label">MULAI</label>
+              <input type="time" id="start-time" />
+            </div>
+            <div class="input-group">
+              <label class="input-label">SELESAI</label>
+              <input type="time" id="end-time" />
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label class="input-label">LOKASI / RUANGAN</label>
+            <input type="text" id="room-name" placeholder="R.301 atau Zoom" />
+          </div>
+
+          <div class="input-group">
+            <label class="input-label">HARI</label>
+            <select id="day-select">
+              <option value="Senin">Senin</option>
+              <option value="Selasa">Selasa</option>
+              <option value="Rabu">Rabu</option>
+              <option value="Kamis">Kamis</option>
+              <option value="Jumat">Jumat</option>
+              <option value="Sabtu">Sabtu</option>
+            </select>
+          </div>
+
+          <div class="modal-actions">
+            <button onclick="closeModal()" class="cancel-btn">Batal</button>
+            <button id="save-schedule-btn" class="save-btn">Simpan</button>
+          </div>
         </div>
       </div>
-    </div>
 
-    <button class="fab-add" onclick="openModal()">
-      <i class="fas fa-plus"></i>
-    </button>
+      <button class="fab-add" onclick="openModal()">
+        <i class="fas fa-plus"></i>
+      </button>
+    </div>
 
     <script src="../assets/js/jadwal.js"></script>
   </body>

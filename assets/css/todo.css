@@ -1,187 +1,221 @@
-/* TODO MODULE STYLES - Versi Super Responsive */
-
-/* Memastikan perhitungan lebar elemen akurat */
-* {
-  box-sizing: border-box;
+/* --- LAYOUT DASAR --- */
+.app-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Mencegah body ikut bergetar saat scroll */
+  position: relative;
 }
 
-/* HEADER STICKY - Biar navigasi gak hilang saat di-scroll */
-.header-nav {
-  position: sticky; /* Ini kuncinya bro */
-  top: 0; /* Nempel di paling atas layar */
-  left: 0;
-  width: 100%;
-  z-index: 1000; /* Biar gak ketumpuk sama konten diary/todo */
-  background: rgba(248, 250, 252, 0.8); /* Warna background semi transparan */
-  backdrop-filter: blur(10px); /* Efek blur kaca yang aesthetic */
+.header-nav-inline {
   padding: 15px 20px;
   display: flex;
   align-items: center;
   gap: 15px;
-  border-bottom: 1px solid rgba(226, 232, 240, 0.5); /* Garis halus di bawah header */
-}
-
-/* Pastikan wrapper tidak nabrak header karena sticky */
-.wrapper {
-  padding-top: 0 !important; /* Reset padding default */
-}
-
-/* Supaya konten list ada jarak dan gak kepotong header */
-.task-container,
-.diary-container,
-.input-section,
-.filter-bar {
-  margin-top: 10px;
-}
-.back-btn {
-  width: 35px;
-  height: 35px;
   background: white;
-  border-radius: 10px;
+  border-bottom: 1px solid #f1f5f9;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  flex-shrink: 0; /* Header tidak boleh tertekan/gepeng */
+}
+
+.back-btn {
+  color: var(--primary);
+  text-decoration: none;
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  text-decoration: none;
-  color: #333;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
+  background: #f8fafc;
+  transition: 0.3s;
 }
 
-/* SECTION INPUT - Kunci Lebar di Sini */
-.input-section {
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 15px !important;
+.back-btn:hover {
+  background: #f1f5f9;
+}
+
+.page-title-inline {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--text);
+}
+
+/* --- AREA SCROLL (BISA DI-SCROLL) --- */
+.wrapper-todo {
   padding: 20px;
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(10px);
-  border-radius: 24px;
-  margin-bottom: 25px;
-  width: 100%;
-  max-width: 100%; /* Cegah melebar ke samping */
-  overflow: hidden; /* Potong apapun yang memaksa keluar */
+  flex: 1;
+  overflow-y: auto;
+  scrollbar-width: none; /* Firefox */
+  padding-bottom: 40px;
 }
 
-.input-row {
-  display: flex;
-  flex-direction: column; /* Wajib kolom untuk HP */
-  gap: 12px;
-  width: 100%;
+.wrapper-todo::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Android */
+}
+
+/* --- INPUT SECTION --- */
+.input-section {
+  background: white;
+  padding: 20px;
+  border-radius: 24px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.03);
+  margin-bottom: 25px;
+  border: 1px solid #f1f5f9;
+}
+
+.input-label {
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: #94a3b8;
+  display: block;
+  margin-bottom: 8px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
 }
 
 #todo-input {
   width: 100%;
-  border: 2px solid transparent;
-  background: #f1f5f9;
-  padding: 14px;
-  border-radius: 15px;
+  border: none;
+  border-bottom: 2px solid #f1f5f9;
+  padding: 12px 0;
   font-size: 1rem;
-  font-family: inherit;
+  font-weight: 600;
   outline: none;
+  margin-bottom: 20px;
+  background: transparent;
+  color: var(--text);
+  transition: 0.3s;
 }
 
-/* FIX DATE PICKER OVERFLOW */
+#todo-input:focus {
+  border-color: var(--primary);
+}
+
+.input-row {
+  display: flex;
+  align-items: flex-end; /* Supaya sejajar dengan tombol */
+  gap: 15px;
+}
+
+.input-col {
+  flex: 1;
+}
+
 #todo-deadline {
   width: 100%;
-  max-width: 100%; /* Kunci di sini agar kalender tidak narik layout */
-  border: 1.5px solid #e2e8f0;
-  background: #ffffff;
+  border: 1.5px solid #f1f5f9;
   padding: 12px;
   border-radius: 12px;
   font-family: inherit;
   font-size: 0.9rem;
   outline: none;
-  cursor: pointer;
+  background: #f8fafc;
+  color: var(--text);
 }
 
 #add-btn {
-  width: 100%;
-  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  width: 50px;
+  height: 50px;
+  background: var(--primary);
   color: white;
   border: none;
-  padding: 16px;
-  border-radius: 15px;
-  font-weight: 700;
-  font-size: 1rem;
+  border-radius: 16px;
+  font-size: 1.2rem;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 8px 15px rgba(99, 102, 241, 0.3);
+  flex-shrink: 0;
+  transition: 0.3s;
 }
 
-/* ITEM LIST */
+#add-btn:active {
+  transform: scale(0.9);
+}
+
+/* --- FILTER & LIST --- */
+.filter-bar {
+  margin-bottom: 15px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #64748b;
+}
+
 .task-item {
   background: white;
-  padding: 15px;
-  border-radius: 18px;
+  padding: 16px;
+  border-radius: 20px;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 15px;
   margin-bottom: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-  width: 100%;
-}
-
-.task-content {
-  flex: 1;
-  min-width: 0; /* Penting: biar teks panjang gak bikin item melebar */
-}
-
-.task-content h4 {
-  font-size: 0.95rem;
-  margin: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.task-item.completed {
-  opacity: 0.5;
-  filter: grayscale(1);
-}
-.task-item.completed h4 {
-  text-decoration: line-through;
+  border: 1px solid #f8fafc;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.01);
 }
 
 .check-btn {
-  width: 24px;
-  height: 24px;
+  width: 26px;
+  height: 26px;
+  border: 2px solid #e2e8f0;
+  border-radius: 9px;
   flex-shrink: 0;
-  border-radius: 8px;
-  border: 2px solid #cbd5e1;
   cursor: pointer;
+  background: transparent;
+  transition: 0.3s;
+}
+
+.task-item.completed {
+  opacity: 0.6;
 }
 
 .task-item.completed .check-btn {
   background: #10b981;
   border-color: #10b981;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+}
+
+.task-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.task-content h4 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.task-content p {
+  margin: 4px 0 0;
+  font-size: 0.75rem;
+  color: #94a3b8;
+  font-weight: 600;
 }
 
 .delete-btn {
-  color: #ff7675;
+  color: #fecaca;
+  padding: 8px;
   cursor: pointer;
-  padding: 5px;
-  flex-shrink: 0;
+  font-size: 1.1rem;
+  transition: 0.2s;
 }
 
-/* ERROR SHAKE */
-.error-shake {
-  animation: shake 0.4s ease-in-out;
-  border-color: #ff7675 !important;
+.delete-btn:hover {
+  color: #ef4444;
 }
 
-@keyframes shake {
-  0%,
-  100% {
-    transform: translateX(0);
+/* --- RESPONSIVE --- */
+@media (max-width: 400px) {
+  .input-row {
+    flex-direction: column;
+    align-items: stretch;
   }
-  25% {
-    transform: translateX(-5px);
-  }
-  75% {
-    transform: translateX(5px);
+  #add-btn {
+    width: 100%;
+    height: 45px;
   }
 }
