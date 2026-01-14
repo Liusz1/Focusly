@@ -1,0 +1,338 @@
+/* --- LAYOUT UTAMA --- */
+.app-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  background-color: #f8fafc;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+.header-nav-inline {
+  padding: 15px 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background: white;
+  border-bottom: 1px solid #f1f5f9;
+  flex-shrink: 0;
+  z-index: 100;
+}
+
+.page-title-inline {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #1e293b;
+  margin: 0;
+}
+
+.wrapper-money {
+  padding: 20px;
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: 40px;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.wrapper-money::-webkit-scrollbar {
+  display: none;
+}
+
+/* --- BALANCE CARD --- */
+.balance-card {
+  background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+  color: white;
+  padding: 30px 25px;
+  border-radius: 32px;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 20px;
+  box-shadow: 0 20px 30px -10px rgba(99, 102, 241, 0.4);
+}
+
+.balance-label {
+  display: block;
+  opacity: 0.85;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 5px;
+}
+
+#total-balance {
+  font-size: 2.4rem;
+  font-weight: 800;
+  letter-spacing: -1px;
+}
+
+/* --- STATS & ACTIONS --- */
+.stats-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 25px;
+}
+.stat-box {
+  flex: 1;
+  background: white;
+  padding: 18px 15px;
+  border-radius: 24px;
+  border: 1px solid #f1f5f9;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.stat-box span {
+  font-size: 0.6rem;
+  font-weight: 800;
+  color: #94a3b8;
+}
+.stat-box strong {
+  font-size: 1rem;
+  font-weight: 800;
+}
+.income strong {
+  color: #10b981;
+}
+.expense strong {
+  color: #ef4444;
+}
+
+.action-grid {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 30px;
+}
+.btn-action-money {
+  flex: 1;
+  padding: 16px;
+  border: none;
+  border-radius: 20px;
+  font-weight: 800;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+}
+.btn-in {
+  background: #dcfce7;
+  color: #15803d;
+}
+.btn-out {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+/* --- HISTORY HEADER --- */
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.history-btns {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-receipt {
+  border: 1px solid #e2e8f0;
+  background: white;
+  color: #64748b;
+  padding: 8px 14px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn-clear {
+  border: none;
+  background: #fee2e2;
+  color: #ef4444;
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* --- TRANSACTION LIST --- */
+.transaction-item {
+  background: white;
+  padding: 15px;
+  border-radius: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  border: 1px solid #f1f5f9;
+}
+.trans-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.icon-in {
+  background: #f0fdf4;
+  color: #10b981;
+}
+.icon-out {
+  background: #fef2f2;
+  color: #ef4444;
+}
+
+/* --- MODAL SYSTEM --- */
+.modal-overlay-money {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.modal-content-money {
+  background: white;
+  width: 100%;
+  max-width: 400px;
+  border-radius: 30px;
+  padding: 25px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.input-group {
+  margin-bottom: 20px;
+}
+.input-label {
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: #94a3b8;
+  display: block;
+  margin-bottom: 8px;
+}
+.modal-content-money input {
+  width: 100%;
+  padding: 15px;
+  border-radius: 15px;
+  border: 1.5px solid #f1f5f9;
+  background: #f8fafc;
+  font-family: inherit;
+  box-sizing: border-box;
+  outline: none;
+}
+.modal-actions {
+  display: flex;
+  gap: 12px;
+}
+.save-btn {
+  flex: 2;
+  background: #6366f1;
+  color: white;
+  border: none;
+  padding: 15px;
+  border-radius: 15px;
+  font-weight: 700;
+}
+.cancel-btn {
+  flex: 1;
+  background: #f1f5f9;
+  color: #64748b;
+  border: none;
+  padding: 15px;
+  border-radius: 15px;
+  font-weight: 700;
+}
+
+/* --- STRUK / RECEIPT (PERBAIKAN TOTAL) --- */
+#receipt-area {
+  background: #ffffff;
+  padding: 30px 20px;
+  font-family: "Courier New", Courier, monospace; /* Font Struk Wajib Monospace */
+  color: #333;
+  border-radius: 2px;
+  position: relative;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+}
+
+/* Efek Kertas Potong di Bawah */
+#receipt-area::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  /* CSS Zigzag Pattern */
+  background: linear-gradient(-45deg, transparent 16px, #fff 0),
+    linear-gradient(45deg, transparent 16px, #fff 0);
+  background-repeat: repeat-x;
+  background-size: 22px 32px;
+  display: none; /* Hanya aktif saat didownload jika perlu */
+}
+
+.receipt-header {
+  text-align: center;
+  margin-bottom: 20px;
+  border-bottom: 1.5px dashed #ccc;
+  padding-bottom: 15px;
+}
+.receipt-header h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  letter-spacing: 1px;
+}
+.receipt-header p {
+  margin: 5px 0;
+  font-size: 0.8rem;
+}
+
+.receipt-item {
+  display: flex;
+  justify-content: space-between;
+  margin: 8px 0;
+  font-size: 0.9rem;
+}
+.receipt-line {
+  border-top: 1.5px dashed #ccc;
+  margin: 15px 0;
+}
+.receipt-total-row {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.download-btn {
+  width: 100%;
+  background: #10b981;
+  color: white;
+  border: none;
+  padding: 16px;
+  border-radius: 15px;
+  font-weight: 800;
+  margin-top: 20px;
+}
+.close-receipt {
+  width: 100%;
+  background: transparent;
+  color: #94a3b8;
+  border: none;
+  padding: 10px;
+  margin-top: 5px;
+  font-weight: 600;
+  cursor: pointer;
+}
