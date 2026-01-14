@@ -1,0 +1,171 @@
+/* --- LAYOUT PROFILE --- */
+/* --- LAYOUT PROFILE --- */
+.header-nav-inline {
+  padding: 15px 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background: white;
+  border-bottom: 1px solid #f1f5f9;
+  position: relative;
+  z-index: 100;
+}
+
+.wrapper-profile {
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: 120px;
+}
+
+/* --- HEADER BACKGROUND --- */
+.profile-header-bg {
+  background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+  height: 120px;
+  border-radius: 0 0 40px 40px;
+}
+
+/* --- AVATAR --- */
+.avatar-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: -60px;
+  position: relative;
+  z-index: 10;
+}
+
+.avatar-wrapper {
+  position: relative;
+  width: 120px;
+  height: 120px;
+}
+
+.avatar-circle {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 5px solid white;
+  object-fit: cover;
+  background: #e2e8f0;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.upload-badge {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  background: #6366f1;
+  color: white;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: 3px solid white;
+}
+
+/* --- FORM STYLING --- */
+.profile-form-content {
+  padding: 30px 35px;
+}
+
+.profile-input-group {
+  margin-bottom: 25px;
+}
+
+.profile-input-group label {
+  display: block;
+  font-size: 0.65rem;
+  font-weight: 600; /* Dibuat lebih tipis */
+  color: #94a3b8;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+  letter-spacing: 0.8px;
+}
+
+/* Hanya Username yang Bold */
+#username-input {
+  font-weight: 800 !important;
+  font-size: 1.1rem;
+  color: #1e293b;
+}
+
+/* Fullname dan About dibuat Normal/Medium */
+.profile-input-group input {
+  width: 100%;
+  border: none;
+  border-bottom: 2px solid #f1f5f9;
+  padding: 10px 0;
+  font-size: 1rem;
+  font-weight: 400; /* Normal weight */
+  color: #475569;
+  background: transparent;
+  outline: none;
+  transition: 0.3s;
+}
+
+.profile-input-group input:focus {
+  border-color: #6366f1;
+}
+
+.btn-save-profile {
+  width: 100%;
+  background: #6366f1;
+  color: white;
+  border: none;
+  padding: 18px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 0.8rem;
+  cursor: pointer;
+  box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
+  margin-top: 15px;
+}
+
+.btn-save-profile:active {
+  transform: scale(0.97);
+}
+
+/* --- BOTTOM NAV (Fix Position) --- */
+.bottom-nav {
+  position: absolute; /* Relative terhadap app-container */
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  background: white;
+  display: flex;
+  padding: 12px 0;
+  border-radius: 22px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  border: 1px solid #f1f5f9;
+  z-index: 1000;
+}
+
+.nav-item {
+  text-decoration: none;
+  color: #cbd5e1;
+  font-size: 0.7rem;
+  font-weight: 700;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+}
+
+.nav-item i {
+  font-size: 1.2rem;
+}
+.nav-item.active {
+  color: var(--primary);
+}
+
+.nav-link i {
+  font-size: 1.2rem;
+}
+.nav-link:hover {
+  color: var(--primary);
+}
