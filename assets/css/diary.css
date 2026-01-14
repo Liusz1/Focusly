@@ -1,221 +1,225 @@
-/* DIARY MODULE - FULL RESPONSIVE FIX */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+/* --- LAYOUT DIARY --- */
+.app-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Mengunci container utama */
+  position: relative;
 }
 
-body.diary-page {
-  background: #f8fafc;
-  font-family: "Plus Jakarta Sans", sans-serif;
-  color: #334155;
-  padding-bottom: 100px;
-}
-
-/* HEADER STICKY - Biar navigasi gak hilang saat di-scroll */
-.header-nav {
-  position: sticky; /* Ini kuncinya bro */
-  top: 0; /* Nempel di paling atas layar */
-  left: 0;
-  width: 100%;
-  z-index: 1000; /* Biar gak ketumpuk sama konten diary/todo */
-  background: rgba(248, 250, 252, 0.8); /* Warna background semi transparan */
-  backdrop-filter: blur(10px); /* Efek blur kaca yang aesthetic */
+.header-nav-inline {
   padding: 15px 20px;
   display: flex;
   align-items: center;
   gap: 15px;
-  border-bottom: 1px solid rgba(226, 232, 240, 0.5); /* Garis halus di bawah header */
-}
-
-/* Pastikan wrapper tidak nabrak header karena sticky */
-.wrapper {
-  padding-top: 0 !important; /* Reset padding default */
-}
-
-/* Supaya konten list ada jarak dan gak kepotong header */
-.task-container,
-.diary-container,
-.input-section,
-.filter-bar {
-  margin-top: 10px;
+  background: white;
+  border-bottom: 1px solid #f1f5f9;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  flex-shrink: 0; /* Header tidak boleh gepeng */
 }
 
 .back-btn {
-  width: 40px;
-  height: 40px;
-  background: white;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  color: var(--primary);
   text-decoration: none;
-  color: #333;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f8fafc;
+  border-radius: 10px;
 }
 
-/* Floating Button */
-#fab-add {
-  position: fixed;
-  bottom: 30px;
-  right: 25px;
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #6366f1, #a855f7);
-  color: white;
-  border: none;
-  font-size: 1.5rem;
-  box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4);
-  z-index: 99;
-  cursor: pointer;
+.page-title-inline {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--text);
 }
 
-/* Modal System */
-.modal {
+.wrapper-diary {
+  padding: 20px;
+  flex: 1; /* Mengambil sisa ruang layar */
+  overflow-y: auto; /* Mengaktifkan scroll di sini */
+  padding-bottom: 100px; /* Ruang agar kartu terakhir tidak tertutup FAB */
+  scrollbar-width: none;
+}
+
+.wrapper-diary::-webkit-scrollbar {
   display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(15, 23, 42, 0.6);
-  backdrop-filter: blur(4px);
-  z-index: 1000;
-  align-items: center;
-  justify-content: center;
-  padding: 15px;
 }
 
-.modal-content {
-  background: white;
-  width: 100%;
-  max-width: 400px;
-  border-radius: 28px;
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  max-height: 85vh;
-  overflow-y: auto;
-}
-
-/* Mood Selector Fix */
-.mood-options {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 10px;
-  padding: 5px 0;
-}
-
-.mood-btn {
-  flex: 1;
-  min-width: 45px;
-  height: 45px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5rem;
-  background: #f1f5f9;
-  border-radius: 12px;
-  cursor: pointer;
-  border: 2px solid transparent;
-  transition: 0.2s;
-}
-
-.mood-btn.selected {
-  background: #eef2ff;
-  border-color: #6366f1;
-  transform: scale(1.1);
-}
-
-/* Input Text */
-#diary-input {
-  width: 100%;
-  min-height: 150px;
-  padding: 15px;
-  border: 1.5px solid #e2e8f0;
-  border-radius: 18px;
-  font-family: inherit;
-  font-size: 1rem;
-  outline: none;
-  resize: none;
-}
-
-.modal-actions {
-  display: flex;
-  gap: 10px;
-}
-
-.save-btn {
-  flex: 2;
-  padding: 15px;
-  background: #6366f1;
-  color: white;
-  border: none;
-  border-radius: 15px;
-  font-weight: 700;
-}
-
-.cancel-btn {
-  flex: 1;
-  padding: 15px;
-  background: #f1f5f9;
-  border: none;
-  border-radius: 15px;
-  color: #64748b;
-}
-
-/* Diary Card List */
+/* --- DIARY CARDS --- */
 .diary-item {
   background: white;
   padding: 20px;
   border-radius: 24px;
   margin-bottom: 15px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
-  border: 1px solid rgba(226, 232, 240, 0.5);
+  border: 1px solid #f1f5f9;
 }
 
 .diary-header {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   margin-bottom: 12px;
 }
 
 .diary-date {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
+  font-weight: 800;
   color: #94a3b8;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+}
+
+.diary-mood {
+  font-size: 1.2rem;
 }
 
 .diary-text {
   font-size: 0.95rem;
   line-height: 1.6;
-  color: #334155;
+  color: var(--text);
   margin-bottom: 15px;
 }
 
 .diary-actions {
   display: flex;
-  gap: 8px;
+  gap: 10px;
   justify-content: flex-end;
 }
 
 .btn-edit,
 .btn-delete {
-  padding: 8px 14px;
+  padding: 8px 15px;
   border-radius: 10px;
   border: none;
-  font-size: 0.8rem;
-  font-weight: 600;
+  font-size: 0.75rem;
+  font-weight: 700;
   cursor: pointer;
 }
 
 .btn-edit {
   background: #eef2ff;
-  color: #6366f1;
+  color: var(--primary);
 }
 .btn-delete {
   background: #fff1f2;
-  color: #f43f5e;
+  color: var(--danger);
+}
+
+/* --- FLOATING ACTION BUTTON (FAB) --- */
+#fab-add {
+  position: absolute;
+  bottom: 30px;
+  right: 25px;
+  width: 60px;
+  height: 60px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, var(--primary), #a855f7);
+  color: white;
+  border: none;
+  font-size: 1.4rem;
+  box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+  cursor: pointer;
+  z-index: 90;
+  transition: 0.3s;
+}
+
+#fab-add:active {
+  transform: scale(0.9);
+}
+
+/* --- MODAL SYSTEM --- */
+.modal-overlay-custom {
+  display: none; /* Default sembunyi, diubah lewat JS */
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modal-content-diary {
+  background: white;
+  width: 100%;
+  max-width: 400px;
+  border-radius: 30px;
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.mood-options {
+  display: flex;
+  justify-content: space-between;
+}
+
+.mood-btn {
+  font-size: 1.5rem;
+  padding: 10px;
+  cursor: pointer;
+  filter: grayscale(1);
+  transition: 0.2s;
+}
+
+.mood-btn.selected {
+  filter: grayscale(0);
+  transform: scale(1.3);
+}
+
+#diary-input {
+  width: 100%;
+  min-height: 120px;
+  border: 1.5px solid #f1f5f9;
+  background: #f8fafc;
+  border-radius: 15px;
+  padding: 15px;
+  font-family: inherit;
+  outline: none;
+  resize: none;
+}
+
+.save-btn {
+  flex: 2;
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 15px;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.cancel-btn {
+  flex: 1;
+  background: #f1f5f9;
+  color: #64748b;
+  border: none;
+  padding: 15px;
+  border-radius: 12px;
+  font-weight: 700;
+}
+
+/* --- PIN BOX --- */
+.pin-box {
+  text-align: center;
+}
+
+#pin-input {
+  width: 100%;
+  text-align: center;
+  font-size: 2rem;
+  letter-spacing: 10px;
+  border: 2px solid #f1f5f9;
+  border-radius: 15px;
+  padding: 10px;
+  margin-top: 10px;
+  outline: none;
 }
