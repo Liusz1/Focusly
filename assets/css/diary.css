@@ -1,10 +1,11 @@
-/* --- LAYOUT DIARY --- */
+/* --- LAYOUT DIARY (FIXED VIEWPORT) --- */
 .app-container {
-  height: 100vh;
+  height: 100vh; /* Kunci tinggi layar agar pas di Android 10 */
   display: flex;
   flex-direction: column;
-  overflow: hidden; /* Mengunci container utama */
+  overflow: hidden;
   position: relative;
+  background: #f8fafc;
 }
 
 .header-nav-inline {
@@ -14,10 +15,8 @@
   gap: 15px;
   background: white;
   border-bottom: 1px solid #f1f5f9;
-  position: sticky;
-  top: 0;
+  flex-shrink: 0;
   z-index: 100;
-  flex-shrink: 0; /* Header tidak boleh gepeng */
 }
 
 .back-btn {
@@ -38,12 +37,14 @@
   color: var(--text);
 }
 
+/* Area Scroll Konten */
 .wrapper-diary {
+  flex: 1;
+  overflow-y: auto;
   padding: 20px;
-  flex: 1; /* Mengambil sisa ruang layar */
-  overflow-y: auto; /* Mengaktifkan scroll di sini */
-  padding-bottom: 100px; /* Ruang agar kartu terakhir tidak tertutup FAB */
+  padding-bottom: 110px; /* Ruang agar kartu terakhir tidak tertutup FAB */
   scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
 }
 
 .wrapper-diary::-webkit-scrollbar {
@@ -112,8 +113,8 @@
 
 /* --- FLOATING ACTION BUTTON (FAB) --- */
 #fab-add {
-  position: absolute;
-  bottom: 30px;
+  position: fixed; /* Berubah ke fixed agar tetap di layar saat scroll */
+  bottom: 25px;
   right: 25px;
   width: 60px;
   height: 60px;
@@ -122,10 +123,13 @@
   color: white;
   border: none;
   font-size: 1.4rem;
-  box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+  box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4);
   cursor: pointer;
-  z-index: 90;
+  z-index: 999;
   transition: 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 #fab-add:active {
@@ -134,12 +138,12 @@
 
 /* --- MODAL SYSTEM --- */
 .modal-overlay-custom {
-  display: none; /* Default sembunyi, diubah lewat JS */
-  position: absolute;
+  display: none;
+  position: fixed; /* Fixed agar menutupi seluruh layar HP */
   inset: 0;
   background: rgba(15, 23, 42, 0.7);
   backdrop-filter: blur(8px);
-  z-index: 1000;
+  z-index: 2000;
   align-items: center;
   justify-content: center;
   padding: 20px;
@@ -154,6 +158,7 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
 }
 
 .mood-options {
@@ -176,14 +181,20 @@
 
 #diary-input {
   width: 100%;
-  min-height: 120px;
-  border: 1.5px solid #f1f5f9;
+  min-height: 150px; /* Ditinggikan agar enak buat ngetik */
+  border: 2px solid #f1f5f9;
   background: #f8fafc;
   border-radius: 15px;
   padding: 15px;
   font-family: inherit;
+  font-size: 1rem;
   outline: none;
   resize: none;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 12px;
 }
 
 .save-btn {
@@ -207,9 +218,15 @@
   font-weight: 700;
 }
 
-/* --- PIN BOX --- */
+/* --- PIN BOX (KEAMANAN) --- */
 .pin-box {
   text-align: center;
+}
+
+.pin-icon {
+  font-size: 2.5rem;
+  color: var(--primary);
+  margin-bottom: 10px;
 }
 
 #pin-input {
@@ -220,6 +237,7 @@
   border: 2px solid #f1f5f9;
   border-radius: 15px;
   padding: 10px;
-  margin-top: 10px;
+  margin: 15px 0;
   outline: none;
+  background: #f8fafc;
 }

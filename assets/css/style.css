@@ -1,11 +1,10 @@
 /* --- VARIABLE & RESET --- */
 :root {
   --primary: #6366f1;
+  --primary-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
   --bg: #f8fafc;
   --text: #1e293b;
   --danger: #ef4444;
-  --glass-bg: rgba(255, 255, 255, 0.85);
-  --glass-border: rgba(255, 255, 255, 0.4);
 }
 
 * {
@@ -16,274 +15,302 @@
 }
 
 body {
-  background: #cbd5e1; /* Warna luar container */
+  background: #cbd5e1;
   margin: 0;
   font-family: "Plus Jakarta Sans", sans-serif;
   color: var(--text);
   display: flex;
   justify-content: center;
-  min-height: 100vh;
+  height: 100vh; /* Kunci tinggi layar */
+  overflow: hidden; /* Hilangkan scroll body */
 }
 
-/* --- CONTAINER UTAMA (RESPONSIVE) --- */
+/* --- CONTAINER UTAMA --- */
 .app-container {
   width: 100%;
-  max-width: 500px; /* Sedikit lebih lebar untuk kenyamanan di tablet/laptop */
+  max-width: 500px;
   background: var(--bg);
-  min-height: 100vh;
+  height: 100vh; /* Paksa tinggi layar HP */
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /* Susun vertikal: Header - Content - Nav */
   position: relative;
   box-shadow: 0 0 100px rgba(0, 0, 0, 0.15);
-  overflow-x: hidden;
 }
 
-.scrollable-content {
-  flex: 1; /* Mengambil sisa ruang yang ada */
-  overflow-y: auto; /* Hanya bagian ini yang bisa di-scroll jika konten banyak */
-  padding-bottom: 80px; /* Ruang agar konten tidak tertutup bottom nav */
-}
-
-/* --- DEKORASI BACKGROUND --- */
-.bg-blur-circle-1,
-.bg-blur-circle-2 {
-  position: fixed;
-  z-index: -1;
-  filter: blur(80px);
-  border-radius: 50%;
-}
-.bg-blur-circle-1 {
-  top: -50px;
-  right: -50px;
-  width: 250px;
-  height: 250px;
-  background: #c7d2fe;
-}
-.bg-blur-circle-2 {
-  bottom: 10%;
-  left: -50px;
-  width: 200px;
-  height: 200px;
-  background: #fbcfe8;
-}
-
-/* --- HEADER & CLOCK --- */
+/* --- HEADER (DIBUAT LEBIH PADAT) --- */
 .header-kai {
   background: white;
-  padding: 40px 20px 20px;
+  padding: 20px 20px 10px; /* Padding dikurangi drastis */
   text-align: center;
   border-bottom: 1px solid #f1f5f9;
-}
-#digital-clock {
-  font-size: 4rem;
-  font-weight: 800;
-  letter-spacing: -3px;
-  margin: 0;
-  color: var(--text);
-}
-#current-date {
-  font-size: 1rem;
-  color: #64748b;
-  margin: 8px 0 25px;
-  font-weight: 500;
+  flex-shrink: 0;
 }
 
-/* STATS BAR */
+#digital-clock {
+  font-size: 3.2rem; /* Ukuran jam diperkecil agar tidak makan tempat */
+  font-weight: 800;
+  letter-spacing: -2px;
+  margin: 0;
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+#current-date {
+  font-size: 0.85rem;
+  color: #64748b;
+  margin: 2px 0 12px;
+  font-weight: 600;
+}
+
+/* STATS BAR (DIBUAT LEBIH RAMBING) */
 .kai-stats {
   display: flex;
   justify-content: space-around;
   align-items: center;
   background: #fdfdfd;
-  padding: 18px;
-  border-radius: 24px;
+  padding: 10px;
+  border-radius: 15px;
   border: 1px solid #f1f5f9;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
 }
+
 .stat-val {
   display: block;
   font-weight: 800;
   color: var(--primary);
-  font-size: 1.15rem;
+  font-size: 0.9rem;
 }
+
 .stat-lab {
-  font-size: 0.65rem;
+  font-size: 0.55rem;
   color: #94a3b8;
   font-weight: 800;
   text-transform: uppercase;
-  margin-top: 2px;
 }
+
 .divider {
   width: 1px;
   background: #f1f5f9;
-  height: 35px;
+  height: 20px;
+}
+
+/* --- KONTEN TENGAH (AREA SCROLL) --- */
+.scrollable-content {
+  flex: 1; /* Mengambil semua sisa ruang yang ada */
+  overflow-y: auto; /* Hanya bagian ini yang boleh scroll */
+  padding: 15px 20px 80px; /* Padding bawah untuk ruang nav */
 }
 
 /* --- MENU GRID --- */
 .kai-menu-container {
-  padding: 25px 20px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 15px;
+  gap: 10px;
+  margin-bottom: 20px;
 }
+
 .kai-menu-item {
   text-decoration: none;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
-  transition: 0.3s;
+  gap: 6px;
 }
+
 .icon-circle {
-  width: 65px;
-  height: 65px;
+  width: 55px; /* Ukuran icon diperkecil */
+  height: 55px;
   background: white;
-  border-radius: 22px;
+  border-radius: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.03);
   border: 1px solid #f8fafc;
 }
+
 .kai-menu-item i {
-  font-size: 1.6rem;
+  font-size: 1.2rem;
   color: var(--primary);
 }
 .kai-menu-item span {
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   font-weight: 700;
   color: var(--text);
 }
-.kai-menu-item:hover .icon-circle {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 20px rgba(99, 102, 241, 0.15);
-}
 
-/* --- CONTENT AREA --- */
-.content-area {
-  flex-grow: 1;
-  padding: 10px 20px 120px;
-}
+/* --- INFO PENTING --- */
 .section-title {
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   font-weight: 800;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   color: #94a3b8;
   text-transform: uppercase;
-  letter-spacing: 1px;
 }
 
-/* CARDS */
 .warning-card {
   background: white;
-  padding: 20px;
-  border-radius: 22px;
+  padding: 15px;
+  border-radius: 18px;
   display: flex;
   align-items: center;
-  gap: 15px;
-  border-left: 6px solid var(--primary);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.02);
-  margin-bottom: 15px;
-}
-.warning-card.danger {
-  border-left-color: var(--danger);
+  gap: 12px;
+  border-left: 4px solid var(--primary);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
+  margin-bottom: 10px;
 }
 
-/* --- BOTTOM NAV --- */
+/* --- BOTTOM NAV (FIXED AT THE VERY BOTTOM) --- */
 .bottom-nav {
-  position: absolute;
-  bottom: 20px;
+  position: fixed;
+  /*Ubahkefixedagartidakikutterdorong*/
+  bottom: 15px;
   left: 50%;
   transform: translateX(-50%);
   width: 90%;
+  max-width: 450px;
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   display: flex;
   padding: 12px;
   border-radius: 22px;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.5);
   justify-content: space-around;
   z-index: 1000;
+  -webkit-border-radius: 22px;
+  -moz-border-radius: 22px;
+  -ms-border-radius: 22px;
+  -o-border-radius: 22px;
 }
+
 .nav-link {
   text-decoration: none;
   color: #94a3b8;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 700;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 5px;
+  gap: 4px;
   background: none;
   border: none;
-  cursor: pointer;
-}
-.nav-link i {
-  font-size: 1.2rem;
-}
-.nav-link:hover {
-  color: var(--primary);
 }
 
-/* --- MODAL --- */
+.nav-link i {
+  font-size: 1.1rem;
+}
+
+/* --- MODAL OVERLAY --- */
 .modal-overlay {
-  display: none;
+  display: none; /* Muncul via JavaScript toggleAbout() */
   position: fixed;
   inset: 0;
-  background: rgba(15, 23, 42, 0.6);
-  backdrop-filter: blur(8px);
+  background: rgba(15, 23, 42, 0.6); /* Gelapkan background */
+  backdrop-filter: blur(8px); /* Efek blur di belakang modal */
+  -webkit-backdrop-filter: blur(8px);
   z-index: 9999;
   align-items: center;
   justify-content: center;
+  padding: 20px;
 }
+
+/* --- KARTU MODAL (PUSAT MASALAHMU) --- */
 .modal-card {
   background: white;
-  padding: 35px 25px;
-  border-radius: 32px;
-  width: 85%;
-  max-width: 320px;
+  padding: 40px 30px;
+  border-radius: 30px;
+  width: 100%;
+  max-width: 340px; /* Ukuran pas untuk HP */
   text-align: center;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+  transform: translateY(0);
+  animation: modalPop 0.3s ease-out; /* Efek muncul membal */
 }
+
+@keyframes modalPop {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Icon Roket di dalam Modal */
+.modal-card i {
+  font-size: 2.5rem;
+  color: var(--primary);
+  margin-bottom: 20px;
+  display: inline-block;
+  background: #f0f0ff;
+  width: 80px;
+  height: 80px;
+  line-height: 80px;
+  border-radius: 50%;
+}
+
+/* Judul Modal */
+.modal-card h3 {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 10px;
+}
+
+.modal-card h3 span {
+  color: var(--primary);
+}
+
+/* Teks Penjelasan */
+.modal-card p {
+  font-size: 0.9rem;
+  color: #64748b;
+  line-height: 1.6;
+  margin-bottom: 25px;
+}
+
+/* Tombol "Oke!" */
 .modal-btn {
   width: 100%;
-  background: var(--primary);
+  background: var(--primary-gradient);
   color: white;
   border: none;
-  padding: 15px;
+  padding: 16px;
   border-radius: 18px;
   font-weight: 800;
+  font-size: 1rem;
   cursor: pointer;
-  margin-top: 20px;
+  transition: 0.3s;
+  box-shadow: 0 10px 20px rgba(99, 102, 241, 0.2);
 }
 
-/* --- MEDIA QUERIES UNTUK LAYAR BESAR (PC/LAPTOP) --- */
-@media (min-width: 768px) {
-  .app-container {
-    max-width: 500px; /* Tetap menjaga feel "OS Handphone" tapi proporsional */
-    margin: 20px 0;
-    min-height: calc(100vh - 40px);
-    border-radius: 40px; /* Memberikan efek layar melengkung di PC */
-  }
-
-  #digital-clock {
-    font-size: 4.5rem;
-  }
-
-  .bottom-nav {
-    width: 85%; /* Sedikit lebih kecil di layar besar agar manis */
-  }
+.modal-btn:active {
+  transform: scale(0.95);
 }
 
-/* Responsif untuk layar sangat kecil */
-@media (max-width: 370px) {
-  .icon-circle {
-    width: 55px;
-    height: 55px;
-  }
-  #digital-clock {
-    font-size: 3rem;
-  }
-  .kai-menu-container {
-    gap: 8px;
-  }
+/* --- BACKGROUND DECOR --- */
+.bg-blur-circle-1,
+.bg-blur-circle-2 {
+  position: fixed;
+  z-index: -1;
+  filter: blur(60px);
+  border-radius: 50%;
+}
+.bg-blur-circle-1 {
+  top: -30px;
+  right: -30px;
+  width: 150px;
+  height: 150px;
+  background: #c7d2fe;
+}
+.bg-blur-circle-2 {
+  bottom: 10%;
+  left: -30px;
+  width: 150px;
+  height: 150px;
+  background: #fbcfe8;
 }
