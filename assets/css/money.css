@@ -25,6 +25,27 @@
   font-weight: 800;
   color: #1e293b;
   margin: 0;
+  flex: 1; /* Mendorong tombol statistik ke kanan */
+}
+
+/* --- TOMBOL STATISTIK HEADER --- */
+.stats-toggle-btn {
+  background: #f1f5f9;
+  color: #6366f1;
+  border: none;
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.stats-toggle-btn:active {
+  transform: scale(0.9);
 }
 
 .wrapper-money {
@@ -213,6 +234,56 @@
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
 }
 
+/* --- DESIGN KHUSUS MODAL STATISTIK --- */
+.modal-stats-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.modal-stats-header h3 {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #1e293b;
+  margin: 0;
+}
+.close-modal-x {
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  color: #94a3b8;
+  cursor: pointer;
+}
+.chart-section-modal {
+  background: #f8fafc;
+  padding: 15px;
+  border-radius: 20px;
+  border: 1px solid #f1f5f9;
+  margin-bottom: 15px;
+}
+.chart-title-modal {
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: #94a3b8;
+  text-align: center;
+  margin-bottom: 15px;
+  letter-spacing: 1px;
+}
+.mini-insight {
+  background: #eef2ff;
+  padding: 12px;
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+#finance-insight {
+  font-size: 0.75rem;
+  color: #6366f1;
+  font-weight: 600;
+  text-align: center;
+  margin: 0;
+}
+
+/* --- INPUT & BUTTONS --- */
 .input-group {
   margin-bottom: 20px;
 }
@@ -256,31 +327,15 @@
   font-weight: 700;
 }
 
-/* --- STRUK / RECEIPT (PERBAIKAN TOTAL) --- */
+/* --- STRUK / RECEIPT --- */
 #receipt-area {
   background: #ffffff;
   padding: 30px 20px;
-  font-family: "Courier New", Courier, monospace; /* Font Struk Wajib Monospace */
+  font-family: "Courier New", Courier, monospace;
   color: #333;
   border-radius: 2px;
   position: relative;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
-}
-
-/* Efek Kertas Potong di Bawah */
-#receipt-area::after {
-  content: "";
-  position: absolute;
-  bottom: -10px;
-  left: 0;
-  width: 100%;
-  height: 100px;
-  /* CSS Zigzag Pattern */
-  background: linear-gradient(-45deg, transparent 16px, #fff 0),
-    linear-gradient(45deg, transparent 16px, #fff 0);
-  background-repeat: repeat-x;
-  background-size: 22px 32px;
-  display: none; /* Hanya aktif saat didownload jika perlu */
 }
 
 .receipt-header {

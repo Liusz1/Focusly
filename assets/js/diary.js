@@ -2,10 +2,10 @@ let diaries = JSON.parse(localStorage.getItem("diaries")) || [];
 let selectedMood = "😊";
 let editId = null;
 
-// KONFIGURASI PIN (Ganti di sini bro)
 const MY_SECRET_PIN = "1234";
 
 const modal = document.getElementById("diary-modal");
+const statsModal = document.getElementById("stats-modal");
 const pinModal = document.getElementById("pin-modal");
 const pinInput = document.getElementById("pin-input");
 const unlockBtn = document.getElementById("unlock-btn");
@@ -13,19 +13,83 @@ const diaryInput = document.getElementById("diary-input");
 const diaryList = document.getElementById("diary-list");
 const saveBtn = document.getElementById("save-diary-btn");
 
-// --- 1. LOGIKA KEAMANAN PIN ---
-unlockBtn.onclick = () => {
-  if (pinInput.value === MY_SECRET_PIN) {
-    pinModal.style.display = "none";
-    renderDiaries(); // Baru tampilkan list setelah PIN benar
-  } else {
-    alert("PIN Salah! Coba lagi.");
-    pinInput.value = "";
-    pinInput.focus();
-  }
-};
+// --- 1. MOOD TRACKER LOGIC (PERBAIKAN TOTAL) ---
+function renderMoodTracker() {
+  const grid = document.getElementById("mood-calendar-grid");
+  const insightText = document.getElementById("mood-insight-text");
+  if (!grid) return;
 
-// --- 2. MODAL CONTROL ---
+  grid.innerHTML = "";
+  const now = new Date();
+  const daysInMonth = new Date(
+    now.getFullYear(),
+    now.getMonth() + 1,
+    0
+  ).getDate();
+
+  const moodMap = {
+    "😊": "dot-happy",
+    "🤩": "dot-excited",
+    "😔": "dot-sad",
+    "😡": "dot-angry",
+  };
+
+  let moodCounts = { "😊": 0, "🤩": 0, "😔": 0, "😡": 0 };
+  let trackedDays = 0;
+
+  for (let i = 1; i <= daysInMonth; i++) {
+    const dot = document.createElement("div");
+    dot.className = "mood-dot";
+
+    // Cek apakah ada jurnal di tanggal ini yang punya rawDate
+    const entry = diaries.find((d) => {
+      if (!d.rawDate) return false;
+      const dDate = new Date(d.rawDate);
+      return (
+        dDate.getDate() === i &&
+        dDate.getMonth() === now.getMonth() &&
+        dDate.getFullYear() === now.getFullYear()
+      );
+    });
+
+    if (entry) {
+      dot.classList.add(moodMap[entry.mood]);
+      moodCounts[entry.mood]++;
+      trackedDays++;
+    }
+    grid.appendChild(dot);
+  }
+
+  // --- LOGIKA INSIGHT YANG LEBIH CERDAS ---
+  if (trackedDays > 0) {
+    const maxCount = Math.max(...Object.values(moodCounts));
+    const topMoods = Object.keys(moodCounts).filter(
+      (m) => moodCounts[m] === maxCount
+    );
+
+    if (topMoods.length > 1) {
+      // Jika jumlah mood yang paling banyak ada lebih dari satu (Seri)
+      insightText.innerText = "Bulan ini perasaanmu campur aduk! 🎢";
+    } else {
+      // Jika benar-benar ada satu yang dominan
+      insightText.innerText = `Bulan ini kamu dominan merasa ${topMoods[0]}`;
+    }
+  } else {
+    insightText.innerText =
+      "Belum ada data jurnal (Coba edit & simpan jurnal lama).";
+  }
+}
+
+// --- 2. MODAL & UI CONTROL ---
+function openStatsModal() {
+  renderMoodTracker();
+  statsModal.style.display = "flex";
+}
+
+function closeStatsModal() {
+  statsModal.style.display = "none";
+}
+
 function openModal(id = null) {
   editId = id;
   if (id) {
@@ -47,7 +111,6 @@ function closeModal() {
   editId = null;
 }
 
-// --- 3. MOOD SELECTOR ---
 function updateMoodUI() {
   document.querySelectorAll(".mood-btn").forEach((btn) => {
     btn.classList.toggle("selected", btn.dataset.mood === selectedMood);
@@ -61,10 +124,21 @@ document.querySelectorAll(".mood-btn").forEach((btn) => {
   };
 });
 
-// --- 4. SAVE LOGIC ---
+// --- 3. PIN & SAVE LOGIC ---
+unlockBtn.onclick = () => {
+  if (pinInput.value === MY_SECRET_PIN) {
+    pinModal.style.display = "none";
+    renderDiaries();
+  } else {
+    alert("PIN Salah!");
+    pinInput.value = "";
+  }
+};
+
 saveBtn.onclick = () => {
   const text = diaryInput.value.trim();
   if (!text) return;
+  const now = new Date();
 
   if (editId) {
     diaries = diaries.map((d) =>
@@ -73,13 +147,15 @@ saveBtn.onclick = () => {
             ...d,
             content: text,
             mood: selectedMood,
+            rawDate: d.rawDate || now.toISOString(),
           }
         : d
     );
   } else {
     const newDiary = {
       id: Date.now(),
-      date: new Date().toLocaleString("id-ID", {
+      rawDate: now.toISOString(),
+      date: now.toLocaleString("id-ID", {
         day: "numeric",
         month: "short",
         hour: "2-digit",
@@ -96,12 +172,11 @@ saveBtn.onclick = () => {
   closeModal();
 };
 
-// --- 5. RENDER LIST ---
+// --- 4. RENDER LIST ---
 function renderDiaries() {
   diaryList.innerHTML = "";
-
   if (diaries.length === 0) {
-    diaryList.innerHTML = `<p style="text-align:center; color:#94a3b8; margin-top:50px;">Belum ada cerita hari ini...</p>`;
+    diaryList.innerHTML = `<p style="text-align:center; color:#94a3b8; margin-top:50px;">Belum ada cerita...</p>`;
     return;
   }
 
@@ -109,16 +184,16 @@ function renderDiaries() {
     const div = document.createElement("div");
     div.className = "diary-item";
     div.innerHTML = `
-            <div class="diary-header">
-                <span class="diary-date">${item.date}</span>
-                <span style="font-size:1.2rem">${item.mood}</span>
-            </div>
-            <p class="diary-text">${item.content}</p>
-            <div class="diary-actions">
-                <button class="btn-edit" onclick="openModal(${item.id})"><i class="fas fa-edit"></i> Edit</button>
-                <button class="btn-delete" onclick="deleteDiary(${item.id})"><i class="fas fa-trash"></i></button>
-            </div>
-        `;
+      <div class="diary-header">
+        <span class="diary-date">${item.date}</span>
+        <span style="font-size:1.2rem">${item.mood}</span>
+      </div>
+      <p class="diary-text">${item.content}</p>
+      <div class="diary-actions">
+        <button class="btn-edit" onclick="openModal(${item.id})"><i class="fas fa-edit"></i> Edit</button>
+        <button class="btn-delete" onclick="deleteDiary(${item.id})"><i class="fas fa-trash"></i></button>
+      </div>
+    `;
     diaryList.appendChild(div);
   });
 }
@@ -133,7 +208,7 @@ window.deleteDiary = (id) => {
 
 window.onclick = (e) => {
   if (e.target == modal) closeModal();
+  if (e.target == statsModal) closeStatsModal();
 };
 
-// Inisialisasi awal (Jangan panggil renderDiaries di sini agar terkunci)
 updateMoodUI();

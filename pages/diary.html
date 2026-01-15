@@ -28,6 +28,14 @@
           <i class="fas fa-arrow-left"></i>
         </a>
         <h2 class="page-title-inline">Jurnal Harian</h2>
+
+        <button
+          id="btn-stats"
+          class="stats-toggle-btn"
+          onclick="openStatsModal()"
+        >
+          <i class="fas fa-chart-pie"></i>
+        </button>
       </header>
 
       <main class="wrapper-diary">
@@ -61,11 +69,52 @@
         </div>
       </div>
 
+      <div id="stats-modal" class="modal-overlay-custom">
+        <div class="modal-content-diary">
+          <div class="mood-tracker-header">
+            <div class="mood-title">
+              <h3>Ringkasan Mood</h3>
+              <span id="current-month-display">Januari 2026</span>
+            </div>
+            <button class="close-stats-btn" onclick="closeStatsModal()">
+              ×
+            </button>
+          </div>
+
+          <div id="mood-calendar-grid" class="mood-grid"></div>
+
+          <div class="mood-legend">
+            <div class="legend-item">
+              <span class="dot-sample dot-happy"></span> <small>Puas</small>
+            </div>
+            <div class="legend-item">
+              <span class="dot-sample dot-excited"></span> <small>Senang</small>
+            </div>
+            <div class="legend-item">
+              <span class="dot-sample dot-sad"></span> <small>Sedih</small>
+            </div>
+            <div class="legend-item">
+              <span class="dot-sample dot-angry"></span> <small>Marah</small>
+            </div>
+          </div>
+
+          <div class="mood-insight-box">
+            <p id="mood-insight-text">Belum ada data bulan ini.</p>
+          </div>
+
+          <button
+            onclick="closeStatsModal()"
+            class="save-btn"
+            style="width: 100%; margin-top: 15px"
+          >
+            Tutup
+          </button>
+        </div>
+      </div>
+
       <div id="pin-modal" class="modal-overlay-custom" style="display: flex">
         <div class="modal-content-diary pin-box">
-          <div class="pin-icon">
-            <i class="fas fa-lock"></i>
-          </div>
+          <div class="pin-icon"><i class="fas fa-lock"></i></div>
           <h3>Akses Terkunci</h3>
           <p>Masukkan PIN untuk melihat jurnal pribadi Anda.</p>
           <input

@@ -25,7 +25,6 @@
       <header class="header-kai">
         <div id="digital-clock">00:00</div>
         <div id="current-date">Memuat...</div>
-
         <div class="kai-stats">
           <div class="stat-box">
             <span class="stat-val" id="stat-todo">0%</span>
@@ -70,9 +69,9 @@
             <div class="warning-card">
               <i class="fas fa-bell"></i>
               <div>
-                <strong>Selamat Datang!</strong>
-                <p style="font-size: 0.8rem; color: #64748b">
-                  Mulai kelola tugasmu hari ini.
+                <strong>Status Sistem:</strong>
+                <p style="font-size: 0.8rem; color: #64748b" id="notif-status">
+                  Memeriksa izin notifikasi...
                 </p>
               </div>
             </div>
@@ -84,29 +83,13 @@
         <button class="nav-link" onclick="toggleAbout()">
           <i class="fas fa-circle-info"></i><span>Info</span>
         </button>
-        <a href="https://instagram.com" class="nav-link" target="_blank">
-          <i class="fab fa-instagram"></i><span>Medsos</span>
-        </a>
-        <a href="pages/profile.html" class="nav-link">
-          <i class="fas fa-user-circle"></i><span>Profil</span>
-        </a>
+        <a href="https://instagram.com" class="nav-link" target="_blank"
+          ><i class="fab fa-instagram"></i><span>Medsos</span></a
+        >
+        <a href="pages/profile.html" class="nav-link"
+          ><i class="fas fa-user-circle"></i><span>Profil</span></a
+        >
       </nav>
-
-      <div id="about-modal" class="modal-overlay">
-        <div class="modal-card">
-          <i
-            class="fas fa-rocket"
-            style="font-size: 2rem; color: var(--primary); margin-bottom: 15px"
-          ></i>
-          <h3>Lius <span>Project</span></h3>
-          <br />
-          <p>
-            Website ini bertujuan untuk mengelola tugas kuliah/pekerjaan dan
-            keuangan mahasiswa.
-          </p>
-          <button class="modal-btn" onclick="toggleAbout()">Oke!</button>
-        </div>
-      </div>
     </div>
 
     <script src="assets/js/main.js"></script>
