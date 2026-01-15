@@ -38,6 +38,12 @@ body {
   overflow-x: hidden;
 }
 
+.scrollable-content {
+  flex: 1; /* Mengambil sisa ruang yang ada */
+  overflow-y: auto; /* Hanya bagian ini yang bisa di-scroll jika konten banyak */
+  padding-bottom: 80px; /* Ruang agar konten tidak tertutup bottom nav */
+}
+
 /* --- DEKORASI BACKGROUND --- */
 .bg-blur-circle-1,
 .bg-blur-circle-2 {
