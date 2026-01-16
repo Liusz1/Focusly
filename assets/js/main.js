@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
+  // Inisialisasi Tampilan
   updateClock();
   updateStats();
   updateSmartWarnings();
@@ -11,6 +12,14 @@ document.addEventListener("DOMContentLoaded", () => {
     updateSmartWarnings();
     updateStats();
   }, 60000);
+
+  // Close modal jika user klik di luar area konten (Overlay)
+  const modal = document.getElementById("evalModal");
+  window.addEventListener("click", (event) => {
+    if (event.target === modal) {
+      closeEvalModal();
+    }
+  });
 });
 
 // 1. SMART WARNINGS (DASHBOARD)
@@ -84,7 +93,6 @@ function updateSmartWarnings() {
 
 // 2. STATS BANNER
 function updateStats() {
-  // Update To-Do Stats
   const todos = JSON.parse(localStorage.getItem("todos")) || [];
   const done = todos.filter((t) => t.completed).length;
   const percent =
@@ -92,7 +100,6 @@ function updateStats() {
   const todoEl = document.getElementById("stat-todo");
   if (todoEl) todoEl.innerText = percent + "%";
 
-  // Update Money Stats
   const trans = JSON.parse(localStorage.getItem("transactions")) || [];
   let bal = 0;
   trans.forEach((t) =>
@@ -102,10 +109,13 @@ function updateStats() {
   const moneyEl = document.getElementById("stat-money");
   if (moneyEl) {
     moneyEl.innerText =
-      bal >= 1000 ? "Rp " + (bal / 1000).toFixed(0) + "k" : "Rp " + bal;
+      bal >= 1000000
+        ? "Rp " + (bal / 1000000).toFixed(1) + "jt"
+        : bal >= 1000
+        ? "Rp " + (bal / 1000).toFixed(0) + "k"
+        : "Rp " + bal;
   }
 
-  // Update Schedule Stats
   const sch = JSON.parse(localStorage.getItem("schedules")) || [];
   const now = new Date();
   const days = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
@@ -144,12 +154,12 @@ function updateClock() {
   }
 }
 
-// 4. MODAL HANDLERS
+// 4. MODAL HANDLERS (EVALUASI)
 function openEvalModal() {
   const modal = document.getElementById("evalModal");
   if (modal) {
     modal.style.display = "flex";
-    document.body.style.overflow = "hidden"; // Kunci scroll saat modal buka
+    document.body.style.overflow = "hidden"; // Kunci scroll agar tidak lari
   }
 }
 
@@ -162,31 +172,36 @@ function closeEvalModal() {
 }
 
 function submitEvaluation() {
-  const nama = document.getElementById("evalName").value;
-  const pesan = document.getElementById("evalMsg").value;
+  const namaInput = document.getElementById("evalName");
+  const pesanInput = document.getElementById("evalMsg");
   const btn = document.getElementById("btnSubmitEval");
   const btnText = document.getElementById("btnText");
+
   const urlScript =
     "https://script.google.com/macros/s/AKfycbzc-zAnbTmXTJAqsvoWVC0reIt4SWWOOfzP6fMNVryJFq32SCY0uoEy9s4t_bDm-ywIRA/exec";
 
-  if (!nama || !pesan) {
+  if (!namaInput.value || !pesanInput.value) {
     return alert("Woi isi dulu namanya sama pesannya bro! 😂");
   }
 
-  // Efek Loading pada tombol
+  // Efek Loading
   if (btn) btn.disabled = true;
   if (btnText) btnText.innerText = "Mengirim...";
+
+  // Gunakan FormData untuk compatibility lebih baik di HP lama
+  const formData = new FormData();
+  formData.append("nama", namaInput.value);
+  formData.append("pesan", pesanInput.value);
 
   fetch(urlScript, {
     method: "POST",
     mode: "no-cors",
-    body: JSON.stringify({ nama: nama, pesan: pesan }),
+    body: JSON.stringify({ nama: namaInput.value, pesan: pesanInput.value }),
   })
     .then(() => {
       alert("Mantap! Masukan kamu sudah diterima. Thanks ya bro!");
-      // Reset Form
-      document.getElementById("evalName").value = "";
-      document.getElementById("evalMsg").value = "";
+      namaInput.value = "";
+      pesanInput.value = "";
       closeEvalModal();
     })
     .catch((err) => {
@@ -194,7 +209,6 @@ function submitEvaluation() {
       console.error(err);
     })
     .finally(() => {
-      // Kembalikan tombol ke semula
       if (btn) btn.disabled = false;
       if (btnText) btnText.innerText = "Kirim Pesan";
     });
@@ -202,20 +216,7 @@ function submitEvaluation() {
 
 // 5. PROFILE & ABOUT
 function toggleAbout() {
-  // Jika kamu menggunakan ID 'about-modal' untuk modal info, pastikan ada di HTML
-  const m = document.getElementById("about-modal");
-  if (m) {
-    m.style.display = m.style.display === "flex" ? "none" : "flex";
-  } else {
-    // Fallback jika modal info belum dibuat, tampilkan alert sederhana
-    alert("LiusProject OS v1.0\nCreated with ❤️ for students.");
-  }
-}
-
-function saveProfileData() {
-  const user = document.getElementById("username-input").value;
-  if (user) {
-    localStorage.setItem("username", user);
-    alert("Profil berhasil diperbarui!");
-  }
+  alert(
+    "LiusProject OS v1.0\nCreated with ❤️ for students.\n\nSelamat belajar!"
+  );
 }

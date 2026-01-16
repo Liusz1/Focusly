@@ -1,17 +1,15 @@
-/* --- LAYOUT PROFILE (FIXED VIEWPORT) --- */
-/* Gunakan Flexbox untuk mengunci tampilan seukuran layar HP */
+/* --- LAYOUT & HEADER (Tetap sama) --- */
 .app-container {
   width: 100%;
   max-width: 500px;
-  background: var(--bg);
-  height: 100vh; /* Mengunci tinggi agar pas di Android 10 kamu */
+  background: white;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   position: relative;
-  overflow: hidden; /* Mencegah seluruh halaman bergeser */
+  overflow: hidden;
 }
 
-/* Header Atas (Tombol Kembali & Judul) */
 .header-nav-inline {
   padding: 15px 20px;
   display: flex;
@@ -19,51 +17,39 @@
   gap: 15px;
   background: white;
   border-bottom: 1px solid #f1f5f9;
-  flex-shrink: 0; /* Mencegah header mengecil */
+  flex-shrink: 0;
   z-index: 100;
 }
 
-/* Wrapper Konten yang bisa di-scroll */
 .wrapper-profile {
-  flex: 1; /* Mengambil sisa ruang layar antara Header dan Nav */
-  overflow-y: auto; /* Hanya area ini yang bisa di-scroll */
-  padding-bottom: 110px; /* Jarak aman agar tombol save tidak tertutup Nav */
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: 110px;
   -webkit-overflow-scrolling: touch;
 }
-
-/* --- HEADER BACKGROUND (DIPERKETAT) --- */
 .profile-header-bg {
   background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
-  height: 100px; /* Ukuran dikurangi dari 120px agar form naik */
+  height: 100px;
   border-radius: 0 0 40px 40px;
 }
 
-/* --- AVATAR SECTION --- */
+/* --- AVATAR & FORM (Tetap sama) --- */
 .avatar-section {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: -55px; /* Disesuaikan dengan tinggi BG baru */
+  margin-top: -55px;
   position: relative;
   z-index: 10;
 }
-
-.avatar-wrapper {
-  position: relative;
-  width: 110px; /* Ukuran dikecilkan sedikit agar lebih proporsional di HP */
-  height: 110px;
-}
-
 .avatar-circle {
-  width: 100%;
-  height: 100%;
+  width: 110px;
+  height: 110px;
   border-radius: 50%;
   border: 4px solid white;
   object-fit: cover;
-  background: #e2e8f0;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
-
 .upload-badge {
   position: absolute;
   bottom: 5px;
@@ -76,53 +62,34 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
   border: 3px solid white;
 }
 
-/* --- FORM STYLING --- */
 .profile-form-content {
-  padding: 25px 30px; /* Padding dikurangi agar lebih compact */
+  padding: 25px 30px;
 }
-
 .profile-input-group {
   margin-bottom: 22px;
 }
-
 .profile-input-group label {
   display: block;
-  font-size: 0.6rem;
-  font-weight: 600;
+  font-size: 0.65rem;
+  font-weight: 700;
   color: #94a3b8;
   text-transform: uppercase;
-  margin-bottom: 4px;
-  letter-spacing: 0.8px;
+  margin-bottom: 5px;
 }
-
-/* Username tetap Bold sesuai keinginanmu */
-#username-input {
-  font-weight: 800 !important;
-  font-size: 1.1rem;
-  color: #1e293b;
-}
-
 .profile-input-group input {
   width: 100%;
   border: none;
   border-bottom: 2px solid #f1f5f9;
-  padding: 8px 0;
-  font-size: 0.95rem;
-  font-weight: 400;
-  color: #475569;
-  background: transparent;
+  padding: 10px 0;
   outline: none;
   transition: 0.3s;
 }
-
 .profile-input-group input:focus {
   border-color: #6366f1;
 }
-
 .btn-save-profile {
   width: 100%;
   background: #6366f1;
@@ -131,25 +98,99 @@
   padding: 16px;
   border-radius: 18px;
   font-weight: 700;
-  font-size: 0.8rem;
-  cursor: pointer;
   box-shadow: 0 10px 25px rgba(99, 102, 241, 0.2);
-  margin-top: 10px;
 }
 
-.btn-save-profile:active {
-  transform: scale(0.97);
+/* --- STYLE MODAL INFO (POP-UP BARU) --- */
+.info-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 20px;
 }
 
-/* --- BOTTOM NAV (FIXED POSITION) --- */
-/* Ini perubahan paling penting agar navigasi tidak hilang saat di-scroll */
+.info-modal-content {
+  background: white;
+  padding: 30px;
+  border-radius: 30px;
+  width: 100%;
+  max-width: 350px;
+  text-align: center;
+  animation: popUp 0.3s ease-out;
+}
+
+.info-modal-icon {
+  width: 60px;
+  height: 60px;
+  background: #f0f4ff;
+  color: #6366f1;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 15px;
+  font-size: 1.5rem;
+}
+
+.info-modal-content h4 {
+  margin-bottom: 10px;
+  color: #1e293b;
+  font-weight: 800;
+}
+.info-modal-content p {
+  font-size: 0.85rem;
+  color: #64748b;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.dev-badge {
+  display: inline-block;
+  background: #f0f4ff;
+  color: #6366f1;
+  padding: 6px 15px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-bottom: 25px;
+}
+
+.btn-close-info {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  background: #f1f5f9;
+  border-radius: 12px;
+  color: #64748b;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+@keyframes popUp {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* --- BOTTOM NAV --- */
 .bottom-nav {
-  position: fixed; /* Berubah dari absolute ke fixed */
+  position: fixed;
   bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
   width: 90%;
-  max-width: 450px; /* Batas lebar untuk tampilan di PC */
+  max-width: 450px;
   background: white;
   display: flex;
   padding: 12px 0;
@@ -157,13 +198,11 @@
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   border: 1px solid #f1f5f9;
   z-index: 1000;
-  -webkit-border-radius: 22px;
-  -moz-border-radius: 22px;
-  -ms-border-radius: 22px;
-  -o-border-radius: 22px;
 }
 
-.nav-item {
+.nav-link {
+  background: none;
+  border: none;
   text-decoration: none;
   color: #cbd5e1;
   font-size: 0.7rem;
@@ -173,13 +212,11 @@
   align-items: center;
   gap: 4px;
   flex: 1;
-  
 }
 
-.nav-item i {
+.nav-link i {
   font-size: 1.2rem;
 }
-
-.nav-item.active {
-  color: #6366f1; /* Menggunakan warna primary */
+.nav-link.active {
+  color: #6366f1;
 }

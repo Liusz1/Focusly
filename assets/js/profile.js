@@ -18,7 +18,7 @@ window.onload = function () {
   }
 };
 
-// 2. LOGIKA UPLOAD DENGAN AUTO-COMPRESS (PENTING!)
+// 2. LOGIKA UPLOAD DENGAN AUTO-COMPRESS
 fileUpload.addEventListener("change", function () {
   const file = this.files[0];
   if (file) {
@@ -28,10 +28,7 @@ fileUpload.addEventListener("change", function () {
       img.src = e.target.result;
 
       img.onload = function () {
-        // Membuat canvas untuk kompresi
         const canvas = document.createElement("canvas");
-
-        // Ukuran 200px sudah sangat cukup untuk avatar profil
         const MAX_WIDTH = 200;
         const scaleSize = MAX_WIDTH / img.width;
         canvas.width = MAX_WIDTH;
@@ -40,10 +37,8 @@ fileUpload.addEventListener("change", function () {
         const ctx = canvas.getContext("2d");
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-        // Kompres ke format JPEG kualitas 0.6 (60%)
-        // Ini akan mengubah file MB menjadi cuma belasan KB
+        // Kompres ke format JPEG kualitas 0.6 agar ringan di localStorage
         const compressedData = canvas.toDataURL("image/jpeg", 0.6);
-
         profileImg.src = compressedData;
       };
     };
@@ -57,7 +52,7 @@ window.saveProfileData = function () {
     username: usernameInput.value.trim(),
     fullname: fullnameInput.value.trim(),
     about: aboutInput.value.trim(),
-    profilePic: profileImg.src, // Base64 yang sudah ringan
+    profilePic: profileImg.src,
   };
 
   try {
@@ -67,3 +62,26 @@ window.saveProfileData = function () {
     alert("Gagal menyimpan, memori penuh!");
   }
 };
+
+// 4. LOGIKA MODAL INFO (PENGGANTI SCROLL)
+// Fungsi untuk buka/tutup modal
+window.toggleInfoModal = function () {
+  const modal = document.getElementById("infoModal");
+  if (!modal) return;
+
+  if (modal.style.display === "flex") {
+    modal.style.display = "none";
+    document.body.style.overflow = "auto"; // Aktifkan scroll kembali
+  } else {
+    modal.style.display = "flex";
+    document.body.style.overflow = "hidden"; // Kunci scroll saat modal buka
+  }
+};
+
+// Menutup modal jika user klik di area gelap (overlay)
+window.addEventListener("click", (event) => {
+  const modal = document.getElementById("infoModal");
+  if (event.target === modal) {
+    toggleInfoModal();
+  }
+});
