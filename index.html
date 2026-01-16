@@ -80,16 +80,52 @@
       </main>
 
       <nav class="bottom-nav">
-        <button class="nav-link" onclick="toggleAbout()">
-          <i class="fas fa-circle-info"></i><span>Info</span>
+        <button class="nav-link" onclick="openEvalModal()">
+          <i class="fas fa-star-half-stroke"></i><span>Evaluasi</span>
         </button>
-        <a href="https://instagram.com" class="nav-link" target="_blank"
-          ><i class="fab fa-instagram"></i><span>Medsos</span></a
-        >
-        <a href="pages/profile.html" class="nav-link"
-          ><i class="fas fa-user-circle"></i><span>Profil</span></a
-        >
+        <a href="https://instagram.com" class="nav-link" target="_blank">
+          <i class="fab fa-instagram"></i><span>Medsos</span>
+        </a>
+        <a href="pages/profile.html" class="nav-link">
+          <i class="fas fa-user-circle"></i><span>Profil</span>
+        </a>
       </nav>
+    </div>
+
+    <div id="evalModal" class="modal-overlay">
+      <div class="modal-content-custom">
+        <div class="modal-header">
+          <div class="header-icon"><i class="fas fa-comment-heart"></i></div>
+        </div>
+        <p class="modal-subtitle">Saran & masukan untuk web ini.</p>
+
+        <div class="eval-form">
+          <div class="input-wrapper">
+            <i class="fas fa-user-tag"></i>
+            <input type="text" id="evalName" placeholder="Nama / NIM" />
+          </div>
+          <div class="input-wrapper">
+            <i class="fas fa-pen-nib"></i>
+            <textarea
+              id="evalMsg"
+              placeholder="Tulis masukanmu di sini..."
+            ></textarea>
+          </div>
+          <div class="modal-footer-btns">
+            <button onclick="closeEvalModal()" class="btn-secondary">
+              Batal
+            </button>
+            <button
+              onclick="submitEvaluation()"
+              id="btnSubmitEval"
+              class="btn-primary"
+            >
+              <span id="btnText">Kirim Pesan</span>
+              <i class="fas fa-paper-plane"></i>
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
 
     <script src="assets/js/main.js"></script>
